@@ -5,8 +5,9 @@ export const BOARD_ROWS = 20;
 
 export const SCORE_BY_ITEM: Record<ItemType, number> = {
   good: 10,
-  bonus: 30,
+  bonus: 20,
   bad: 0,
+  yellow: -5,
 };
 
 const BASE_SETTINGS: Omit<GameSettings, "baseTicksPerMove"> = {
@@ -18,6 +19,7 @@ const BASE_SETTINGS: Omit<GameSettings, "baseTicksPerMove"> = {
   minTicksPerMove: 5,
   bonusSpawnEvery: 28,
   bonusLifetime: 18,
+  yellowSpawnEvery: 24,
   badSpawnEvery: 20,
   badExpiresAfterGoodCollected: 5,
 };

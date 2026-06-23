@@ -119,7 +119,22 @@ export function GameClient() {
     [],
   );
   const startGame = useCallback(() => dispatch({ type: "start" }), []);
-  useKeyboardInput({ onDirection: queue, onSpace: startGame });
+  const handleSpace = useCallback(() => {
+    if (state.phase === "idle") {
+      dispatch({ type: "start" });
+      return;
+    }
+
+    if (state.phase === "running") {
+      dispatch({ type: "pause" });
+      return;
+    }
+
+    if (state.phase === "paused") {
+      dispatch({ type: "resume" });
+    }
+  }, [state.phase]);
+  useKeyboardInput({ onDirection: queue, onSpace: handleSpace });
   const touchHandlers = useSwipeInput(queue);
   usePersistHighScore(state.highScore);
 
@@ -154,8 +169,8 @@ export function GameClient() {
         }
       />
       <p className="text-sm text-white/65">
-        Move with arrows or WASD. Press Space to start. On mobile, use the arrow
-        controls or swipe.
+        Move with arrows or WASD. Press Spacebar to start, pause, or resume. On
+        mobile, use the arrow controls or swipe.
       </p>
     </section>
   );

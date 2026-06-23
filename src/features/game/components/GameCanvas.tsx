@@ -84,6 +84,7 @@ export function GameCanvas({ state, className }: GameCanvasProps) {
       if (item.type === "good") context.fillStyle = "#8ae35f";
       if (item.type === "bonus") context.fillStyle = "#56b3ff";
       if (item.type === "bad") context.fillStyle = "#ff6a88";
+      if (item.type === "yellow") context.fillStyle = "#ffd95b";
 
       context.beginPath();
       context.arc(

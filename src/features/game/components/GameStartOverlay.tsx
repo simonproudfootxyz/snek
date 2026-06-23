@@ -10,11 +10,34 @@ export function GameStartOverlay({ onStart }: GameStartOverlayProps) {
           Welcome to Snek, The Game
         </p>
         <p className="mt-2 text-lg font-semibold text-white">
-          Collect green, avoid red and walls.
+          Collect green, blue, and yellow items. Avoid red items and walls.
         </p>
+        <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-3 text-left">
+          <p className="text-xs uppercase tracking-wide text-white/60">
+            Square legend
+          </p>
+          <ul className="mt-2 space-y-2 text-sm text-white/80">
+            <li className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-sm bg-[#8ae35f]" aria-hidden />
+              Green = +10 points
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-sm bg-[#56b3ff]" aria-hidden />
+              Blue = +20 points
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-sm bg-[#ffd95b]" aria-hidden />
+              Yellow = -5 points and -1 length
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-sm bg-[#ff6a88]" aria-hidden />
+              Red = game over
+            </li>
+          </ul>
+        </div>
         <ul className="mt-4 space-y-1 text-sm text-white/75">
           <li>Use arrows or WASD to steer.</li>
-          <li>Press Space to start instantly.</li>
+          <li>Press Space to start, pause, or resume instantly.</li>
           <li>On mobile, use the arrow buttons below.</li>
         </ul>
         <button

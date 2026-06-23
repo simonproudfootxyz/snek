@@ -65,6 +65,24 @@ function maybeSpawnBonus(state: GameState): GameState {
   };
 }
 
+function maybeSpawnYellow(state: GameState): GameState {
+  const hasYellow = state.items.some((item) => item.type === "yellow");
+  if (hasYellow || state.tick === 0 || state.tick % state.settings.yellowSpawnEvery !== 0) {
+    return state;
+  }
+
+  const [yellow, nextSeed] = spawnItem(state, "yellow", state.rngSeed);
+  if (!yellow) {
+    return { ...state, rngSeed: nextSeed };
+  }
+
+  return {
+    ...state,
+    items: [...state.items, yellow],
+    rngSeed: nextSeed,
+  };
+}
+
 function maybeSpawnBad(state: GameState): GameState {
   const badItemCount = state.items.filter((item) => item.type === "bad").length;
   const progression = Math.floor(state.tick / 80);
@@ -155,6 +173,10 @@ export function tickGame(state: GameState): GameState {
     nextSnake = nextSnake.slice(0, -1);
   }
 
+  if (collectedItem?.type === "yellow" && nextSnake.length > 1) {
+    nextSnake = nextSnake.slice(0, -1);
+  }
+
   if (collidesWithSelf(nextHead, nextSnake.slice(1))) {
     return {
       ...state,
@@ -199,6 +221,7 @@ export function tickGame(state: GameState): GameState {
 
   nextState = ensureGoodItem(nextState);
   nextState = maybeSpawnBonus(nextState);
+  nextState = maybeSpawnYellow(nextState);
   nextState = maybeSpawnBad(nextState);
 
   return nextState;

@@ -1,6 +1,6 @@
 export type Direction = "up" | "down" | "left" | "right";
 
-export type ItemType = "good" | "bonus" | "bad";
+export type ItemType = "good" | "bonus" | "bad" | "yellow";
 
 export type GamePhase = "idle" | "running" | "paused" | "gameover";
 
@@ -29,6 +29,7 @@ export interface GameSettings {
   minTicksPerMove: number;
   bonusSpawnEvery: number;
   bonusLifetime: number;
+  yellowSpawnEvery: number;
   badSpawnEvery: number;
   badExpiresAfterGoodCollected: number;
 }

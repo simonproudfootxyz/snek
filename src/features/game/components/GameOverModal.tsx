@@ -57,7 +57,7 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
     if (scoreValue < 200) {
       return "You're a natural! I bet you can do even better next time!";
     }
-    return "Woah, you're a pro! I bet next time you'll break your own record!";
+    return "Woah, you're a pro! I bet next time you'll be better than ever!";
   };
 
   return (
