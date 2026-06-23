@@ -21,3 +21,8 @@ body {
   color: var(--text);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+.game-touch-controls,
+.game-play-area {
+  margin: 0 auto;
+}

@@ -11,9 +11,20 @@ function mapKeyToDirection(key: string): Direction | null {
   return null;
 }
 
-export function useKeyboardInput(onDirection: (direction: Direction) => void): void {
+interface UseKeyboardInputOptions {
+  onDirection: (direction: Direction) => void;
+  onSpace?: () => void;
+}
+
+export function useKeyboardInput({ onDirection, onSpace }: UseKeyboardInputOptions): void {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === " ") {
+        event.preventDefault();
+        onSpace?.();
+        return;
+      }
+
       const direction = mapKeyToDirection(event.key);
       if (!direction) {
         return;
@@ -27,5 +38,5 @@ export function useKeyboardInput(onDirection: (direction: Direction) => void): v
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [onDirection]);
+  }, [onDirection, onSpace]);
 }

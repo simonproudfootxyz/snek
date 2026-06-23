@@ -50,13 +50,18 @@ function createLShape(length: number, horizontalFirst: boolean): Position[] {
   }
 
   for (let index = 1; index < armB; index += 1) {
-    cells.push(horizontalFirst ? { x: armA - 1, y: index } : { x: index, y: armA - 1 });
+    cells.push(
+      horizontalFirst ? { x: armA - 1, y: index } : { x: index, y: armA - 1 },
+    );
   }
 
   return cells.slice(0, length);
 }
 
-function createStructureShape(seed: number, size: number): [Position[], number] {
+function createStructureShape(
+  seed: number,
+  size: number,
+): [Position[], number] {
   const [shapeKind, seedAfterKind] = randomInt(seed, 3);
   const [orientation, nextSeed] = randomInt(seedAfterKind, 2);
   const isHorizontal = orientation === 0;
@@ -78,17 +83,32 @@ function generateStructures(state: GameState): [Position[], number] {
   }
 
   const occupied = new Set(state.snake.map(toKey));
+  const blocked = new Set(state.snake.map(toKey));
   const structures: Position[] = [];
   let seed = state.rngSeed;
-  const [targetOffset, seedAfterOffset] = randomInt(seed, STRUCTURE_MAX_COUNT - STRUCTURE_MIN_COUNT + 1);
+  const [targetOffset, seedAfterOffset] = randomInt(
+    seed,
+    STRUCTURE_MAX_COUNT - STRUCTURE_MIN_COUNT + 1,
+  );
   seed = seedAfterOffset;
   const targetCount = STRUCTURE_MIN_COUNT + targetOffset;
 
-  for (let structureIndex = 0; structureIndex < targetCount; structureIndex += 1) {
+  for (
+    let structureIndex = 0;
+    structureIndex < targetCount;
+    structureIndex += 1
+  ) {
     let placed = false;
 
-    for (let attempt = 0; attempt < STRUCTURE_ATTEMPTS && !placed; attempt += 1) {
-      const [sizeOffset, seedAfterSize] = randomInt(seed, STRUCTURE_MAX_SIZE - STRUCTURE_MIN_SIZE + 1);
+    for (
+      let attempt = 0;
+      attempt < STRUCTURE_ATTEMPTS && !placed;
+      attempt += 1
+    ) {
+      const [sizeOffset, seedAfterSize] = randomInt(
+        seed,
+        STRUCTURE_MAX_SIZE - STRUCTURE_MIN_SIZE + 1,
+      );
       seed = seedAfterSize;
       const size = STRUCTURE_MIN_SIZE + sizeOffset;
       const [shape, seedAfterShape] = createStructureShape(seed, size);
@@ -106,13 +126,24 @@ function generateStructures(state: GameState): [Position[], number] {
         y: cell.y + originY,
       }));
 
-      const overlaps = translated.some((cell) => occupied.has(toKey(cell)));
+      const overlaps = translated.some((cell) => blocked.has(toKey(cell)));
       if (overlaps) {
         continue;
       }
 
       for (const cell of translated) {
         occupied.add(toKey(cell));
+
+        for (let dy = -1; dy <= 1; dy += 1) {
+          for (let dx = -1; dx <= 1; dx += 1) {
+            const x = cell.x + dx;
+            const y = cell.y + dy;
+            if (x < 0 || y < 0 || x >= state.settings.cols || y >= state.settings.rows) {
+              continue;
+            }
+            blocked.add(toKey({ x, y }));
+          }
+        }
       }
       structures.push(...translated);
       placed = true;
@@ -154,7 +185,11 @@ export function createInitialState(options?: InitialOptions): GameState {
   baseState.structures = structures;
   baseState.rngSeed = seedAfterStructures;
 
-  const [initialGoodItem, nextSeed] = spawnItem(baseState, "good", baseState.rngSeed);
+  const [initialGoodItem, nextSeed] = spawnItem(
+    baseState,
+    "good",
+    baseState.rngSeed,
+  );
   if (initialGoodItem) {
     baseState.items.push(initialGoodItem);
   }

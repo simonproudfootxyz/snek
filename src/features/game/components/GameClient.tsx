@@ -8,6 +8,8 @@ import { GameCanvas } from "./GameCanvas";
 import { GameControls } from "./GameControls";
 import { GameHUD } from "./GameHUD";
 import { GameOverModal } from "./GameOverModal";
+import { GameStartOverlay } from "./GameStartOverlay";
+import { GameTouchControls } from "./GameTouchControls";
 import { useGameLoop } from "../hooks/useGameLoop";
 import { readHighScore, usePersistHighScore } from "../hooks/usePersistentSettings";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
@@ -106,7 +108,8 @@ export function GameClient() {
     (direction: Direction) => dispatch({ type: "queue-direction", direction }),
     [],
   );
-  useKeyboardInput(queue);
+  const startGame = useCallback(() => dispatch({ type: "start" }), []);
+  useKeyboardInput({ onDirection: queue, onSpace: startGame });
   const touchHandlers = useSwipeInput(queue);
   usePersistHighScore(state.highScore);
 
@@ -120,21 +123,23 @@ export function GameClient() {
       <GameHUD state={state} />
       <div className="relative w-fit">
         <GameCanvas state={state} />
+        {state.phase === "idle" && <GameStartOverlay onStart={startGame} />}
         {state.phase === "gameover" && (
           <GameOverModal score={state.score} onRestart={() => dispatch({ type: "restart" })} />
         )}
       </div>
+      <GameTouchControls onDirection={queue} />
       <GameControls
         phase={state.phase}
         difficulty={state.difficulty}
-        onStart={() => dispatch({ type: "start" })}
+        onStart={startGame}
         onPause={() => dispatch({ type: "pause" })}
         onResume={() => dispatch({ type: "resume" })}
         onRestart={() => dispatch({ type: "restart" })}
         onDifficultyChange={(difficulty) => dispatch({ type: "set-difficulty", difficulty })}
       />
       <p className="text-sm text-white/65">
-        Move with arrows or WASD. On mobile, swipe anywhere in the game panel.
+        Move with arrows or WASD. Press Space to start. On mobile, use the arrow controls or swipe.
       </p>
     </section>
   );

@@ -92,7 +92,7 @@ export function GameCanvas({ state }: GameCanvasProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)]"
+      className="rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)] game-play-area"
       aria-label="Game board"
     />
   );

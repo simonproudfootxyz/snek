@@ -68,7 +68,7 @@ function maybeSpawnBonus(state: GameState): GameState {
 function maybeSpawnBad(state: GameState): GameState {
   const badItemCount = state.items.filter((item) => item.type === "bad").length;
   const progression = Math.floor(state.tick / 80);
-  const maxBadItems = Math.min(12, 3 + progression);
+  const maxBadItems = Math.min(9, 3 + progression);
   const spawnEvery = Math.max(8, state.settings.badSpawnEvery - progression * 2);
   if (badItemCount >= maxBadItems || state.tick === 0 || state.tick % spawnEvery !== 0) {
     return state;
