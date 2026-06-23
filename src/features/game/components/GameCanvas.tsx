@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { GameState } from "../engine/types";
 
-const CELL_SIZE = 22;
+const MAX_BOARD_SIZE = 440;
 
 interface GameCanvasProps {
   state: GameState;
@@ -23,13 +23,17 @@ export function GameCanvas({ state }: GameCanvasProps) {
       return;
     }
 
-    const width = state.settings.cols * CELL_SIZE;
-    const height = state.settings.rows * CELL_SIZE;
+    const width = Math.min(MAX_BOARD_SIZE, canvas.clientWidth || MAX_BOARD_SIZE);
+    const height = (width * state.settings.rows) / state.settings.cols;
+    const cellWidth = width / state.settings.cols;
+    const cellHeight = height / state.settings.rows;
+    const cellSize = Math.min(cellWidth, cellHeight);
+    const snakeInset = Math.max(1, cellSize * 0.09);
+    const structureInset = Math.max(0.75, cellSize * 0.07);
+    const itemRadius = cellSize * 0.31;
     const ratio = window.devicePixelRatio || 1;
     canvas.width = Math.floor(width * ratio);
     canvas.height = Math.floor(height * ratio);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
 
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     context.clearRect(0, 0, width, height);
@@ -41,34 +45,34 @@ export function GameCanvas({ state }: GameCanvasProps) {
     context.lineWidth = 1;
     for (let y = 0; y <= state.settings.rows; y += 1) {
       context.beginPath();
-      context.moveTo(0, y * CELL_SIZE);
-      context.lineTo(width, y * CELL_SIZE);
+      context.moveTo(0, y * cellHeight);
+      context.lineTo(width, y * cellHeight);
       context.stroke();
     }
     for (let x = 0; x <= state.settings.cols; x += 1) {
       context.beginPath();
-      context.moveTo(x * CELL_SIZE, 0);
-      context.lineTo(x * CELL_SIZE, height);
+      context.moveTo(x * cellWidth, 0);
+      context.lineTo(x * cellWidth, height);
       context.stroke();
     }
 
     for (const segment of state.snake) {
       context.fillStyle = "#6ce0b7";
       context.fillRect(
-        segment.x * CELL_SIZE + 2,
-        segment.y * CELL_SIZE + 2,
-        CELL_SIZE - 4,
-        CELL_SIZE - 4,
+        segment.x * cellWidth + snakeInset,
+        segment.y * cellHeight + snakeInset,
+        cellWidth - snakeInset * 2,
+        cellHeight - snakeInset * 2,
       );
     }
 
     for (const structure of state.structures ?? []) {
       context.fillStyle = "#8b8f9b";
       context.fillRect(
-        structure.x * CELL_SIZE + 1.5,
-        structure.y * CELL_SIZE + 1.5,
-        CELL_SIZE - 3,
-        CELL_SIZE - 3,
+        structure.x * cellWidth + structureInset,
+        structure.y * cellHeight + structureInset,
+        cellWidth - structureInset * 2,
+        cellHeight - structureInset * 2,
       );
     }
 
@@ -79,9 +83,9 @@ export function GameCanvas({ state }: GameCanvasProps) {
 
       context.beginPath();
       context.arc(
-        item.position.x * CELL_SIZE + CELL_SIZE / 2,
-        item.position.y * CELL_SIZE + CELL_SIZE / 2,
-        CELL_SIZE * 0.31,
+        item.position.x * cellWidth + cellWidth / 2,
+        item.position.y * cellHeight + cellHeight / 2,
+        itemRadius,
         0,
         Math.PI * 2,
       );
@@ -92,7 +96,7 @@ export function GameCanvas({ state }: GameCanvasProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)] game-play-area"
+      className="aspect-square w-full max-w-[440px] rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)] game-play-area"
       aria-label="Game board"
     />
   );
