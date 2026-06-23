@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Snek Chase",
-  description: "A minimalist Meerca Chase-inspired snake game",
+  title: "Snek, The Game",
+  description: "A minimalist snek game",
 };
 
 export default function RootLayout({

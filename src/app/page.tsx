@@ -9,7 +9,7 @@ export default function Home() {
             Good old fashioned arcade fun
           </p>
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Snek Chase
+            Snek, The Game
           </h1>
           <p className="max-w-2xl text-sm text-[var(--muted)] sm:text-base">
             Collect green and blue items for points, avoid pink hazards, and

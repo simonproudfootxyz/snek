@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import "./GameOverModal.css";
 
 interface GameOverModalProps {
   score: number;
@@ -12,7 +13,7 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
   const origin = typeof window === "undefined" ? "" : window.location.origin;
   const shareMessage = useMemo(
     () =>
-      `Let's go! Just scored ${score} on Snek! Think you can beat me? ${origin}`,
+      `Let's go! Just scored ${score} on Snek, The Game! Think you can beat me? ${origin}`,
     [origin, score],
   );
   const twitterShareUrl = useMemo(
@@ -61,7 +62,7 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
-      <div className="w-[340px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center">
+      <div className="w-[340px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center game-over-modal">
         <p className="text-xs uppercase tracking-[0.2em] text-white/55">
           Run ended, you scored:
         </p>
