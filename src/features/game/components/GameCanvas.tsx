@@ -7,9 +7,10 @@ const MAX_BOARD_SIZE = 440;
 
 interface GameCanvasProps {
   state: GameState;
+  className?: string;
 }
 
-export function GameCanvas({ state }: GameCanvasProps) {
+export function GameCanvas({ state, className }: GameCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -23,7 +24,10 @@ export function GameCanvas({ state }: GameCanvasProps) {
       return;
     }
 
-    const width = Math.min(MAX_BOARD_SIZE, canvas.clientWidth || MAX_BOARD_SIZE);
+    const width = Math.min(
+      MAX_BOARD_SIZE,
+      canvas.clientWidth || MAX_BOARD_SIZE,
+    );
     const height = (width * state.settings.rows) / state.settings.cols;
     const cellWidth = width / state.settings.cols;
     const cellHeight = height / state.settings.rows;
@@ -96,7 +100,7 @@ export function GameCanvas({ state }: GameCanvasProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="aspect-square w-full max-w-[440px] rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)] game-play-area"
+      className={`aspect-square w-full max-w-[440px] rounded-xl border border-white/12 bg-[#0f1118] shadow-[0_14px_35px_rgba(0,0,0,0.42)] game-play-area ${className}`}
       aria-label="Game board"
     />
   );

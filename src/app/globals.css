@@ -23,6 +23,6 @@ body {
 }
 
 .game-touch-controls,
-.game-play-area {
+.game-canvas-container {
   margin: 0 auto;
 }

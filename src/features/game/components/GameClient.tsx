@@ -11,7 +11,10 @@ import { GameOverModal } from "./GameOverModal";
 import { GameStartOverlay } from "./GameStartOverlay";
 import { GameTouchControls } from "./GameTouchControls";
 import { useGameLoop } from "../hooks/useGameLoop";
-import { readHighScore, usePersistHighScore } from "../hooks/usePersistentSettings";
+import {
+  readHighScore,
+  usePersistHighScore,
+} from "../hooks/usePersistentSettings";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
 import { useSwipeInput } from "../hooks/useSwipeInput";
 
@@ -91,13 +94,20 @@ function createStateFromStorage(): GameState {
 }
 
 export function GameClient() {
-  const [state, dispatch] = useReducer(reducer, undefined, createStateFromStorage);
+  const [state, dispatch] = useReducer(
+    reducer,
+    undefined,
+    createStateFromStorage,
+  );
 
   useEffect(() => {
     dispatch({ type: "hydrate-high-score", highScore: readHighScore() });
   }, []);
 
-  const msPerTick = useMemo(() => state.ticksPerMove * 40, [state.ticksPerMove]);
+  const msPerTick = useMemo(
+    () => state.ticksPerMove * 40,
+    [state.ticksPerMove],
+  );
   useGameLoop({
     isRunning: state.phase === "running",
     msPerTick,
@@ -121,11 +131,14 @@ export function GameClient() {
       aria-label="Snek game area"
     >
       <GameHUD state={state} />
-      <div className="relative w-full max-w-[440px]">
-        <GameCanvas state={state} />
+      <div className="relative w-full max-w-[440px] game-canvas-container">
+        <GameCanvas state={state} className="game-play-area" />
         {state.phase === "idle" && <GameStartOverlay onStart={startGame} />}
         {state.phase === "gameover" && (
-          <GameOverModal score={state.score} onRestart={() => dispatch({ type: "restart" })} />
+          <GameOverModal
+            score={state.score}
+            onRestart={() => dispatch({ type: "restart" })}
+          />
         )}
       </div>
       <GameTouchControls onDirection={queue} />
@@ -136,10 +149,13 @@ export function GameClient() {
         onPause={() => dispatch({ type: "pause" })}
         onResume={() => dispatch({ type: "resume" })}
         onRestart={() => dispatch({ type: "restart" })}
-        onDifficultyChange={(difficulty) => dispatch({ type: "set-difficulty", difficulty })}
+        onDifficultyChange={(difficulty) =>
+          dispatch({ type: "set-difficulty", difficulty })
+        }
       />
       <p className="text-sm text-white/65">
-        Move with arrows or WASD. Press Space to start. On mobile, use the arrow controls or swipe.
+        Move with arrows or WASD. Press Space to start. On mobile, use the arrow
+        controls or swipe.
       </p>
     </section>
   );
