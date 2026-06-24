@@ -30,6 +30,7 @@ export interface GameSettings {
   bonusSpawnEvery: number;
   bonusLifetime: number;
   yellowSpawnEvery: number;
+  yellowLifetime: number;
   badSpawnEvery: number;
   badExpiresAfterGoodCollected: number;
 }

@@ -11,10 +11,16 @@ interface SpawnState {
   structures: Position[];
 }
 
+interface SpawnItemOptions {
+  expiresAtTick?: number;
+  expiresAtGoodCount?: number;
+}
+
 export function spawnItem(
   state: SpawnState,
   type: ItemType,
   seed: number,
+  options?: SpawnItemOptions,
 ): [Item | null, number] {
   const occupied = new Set<string>([
     ...state.snake.map(toKey),
@@ -43,11 +49,13 @@ export function spawnItem(
     type,
     position,
     expiresAtTick:
-      type === "bonus" ? state.tick + state.settings.bonusLifetime : undefined,
+      options?.expiresAtTick ??
+      (type === "bonus" ? state.tick + state.settings.bonusLifetime : undefined),
     expiresAtGoodCount:
-      type === "bad"
+      options?.expiresAtGoodCount ??
+      (type === "bad"
         ? state.goodCollected + state.settings.badExpiresAfterGoodCollected
-        : undefined,
+        : undefined),
   };
 
   return [item, nextSeed];

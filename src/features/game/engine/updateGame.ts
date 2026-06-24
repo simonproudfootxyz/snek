@@ -4,6 +4,11 @@ import { scoreDelta } from "./scoring";
 import { spawnItem } from "./spawn";
 import type { Direction, GameState, Item } from "./types";
 
+const MAX_GOOD_ITEMS = 3;
+const MAX_TIMED_GOOD_ITEMS = 2;
+const MAX_BONUS_ITEMS = 2;
+const MAX_YELLOW_ITEMS = 2;
+
 function isOutOfBounds(state: GameState, x: number, y: number): boolean {
   return x < 0 || y < 0 || x >= state.settings.cols || y >= state.settings.rows;
 }
@@ -29,9 +34,10 @@ function nextTicksPerMove(state: GameState, score: number): number {
   return Math.max(state.settings.minTicksPerMove, candidate);
 }
 
-function ensureGoodItem(state: GameState): GameState {
-  const hasGoodItem = state.items.some((item) => item.type === "good");
-  if (hasGoodItem) {
+function ensureGoodItems(state: GameState): GameState {
+  const goodItems = state.items.filter((item) => item.type === "good");
+  const hasPersistentGood = goodItems.some((item) => item.expiresAtTick === undefined);
+  if (hasPersistentGood || goodItems.length >= MAX_GOOD_ITEMS) {
     return state;
   }
 
@@ -47,13 +53,45 @@ function ensureGoodItem(state: GameState): GameState {
   };
 }
 
-function maybeSpawnBonus(state: GameState): GameState {
-  const hasBonus = state.items.some((item) => item.type === "bonus");
-  if (hasBonus || state.tick === 0 || state.tick % state.settings.bonusSpawnEvery !== 0) {
+function maybeSpawnTimedGood(state: GameState): GameState {
+  const goodItems = state.items.filter((item) => item.type === "good");
+  const timedGoodCount = goodItems.filter((item) => item.expiresAtTick !== undefined).length;
+  if (
+    timedGoodCount >= MAX_TIMED_GOOD_ITEMS ||
+    goodItems.length >= MAX_GOOD_ITEMS ||
+    state.tick === 0 ||
+    state.tick % state.settings.bonusSpawnEvery !== 0
+  ) {
     return state;
   }
 
-  const [bonus, nextSeed] = spawnItem(state, "bonus", state.rngSeed);
+  const [timedGood, nextSeed] = spawnItem(state, "good", state.rngSeed, {
+    expiresAtTick: state.tick + state.settings.bonusLifetime,
+  });
+  if (!timedGood) {
+    return { ...state, rngSeed: nextSeed };
+  }
+
+  return {
+    ...state,
+    items: [...state.items, timedGood],
+    rngSeed: nextSeed,
+  };
+}
+
+function maybeSpawnBonus(state: GameState): GameState {
+  const bonusCount = state.items.filter((item) => item.type === "bonus").length;
+  if (
+    bonusCount >= MAX_BONUS_ITEMS ||
+    state.tick === 0 ||
+    state.tick % state.settings.bonusSpawnEvery !== 0
+  ) {
+    return state;
+  }
+
+  const [bonus, nextSeed] = spawnItem(state, "bonus", state.rngSeed, {
+    expiresAtTick: state.tick + state.settings.bonusLifetime,
+  });
   if (!bonus) {
     return { ...state, rngSeed: nextSeed };
   }
@@ -65,9 +103,10 @@ function maybeSpawnBonus(state: GameState): GameState {
   };
 }
 
-function maybeSpawnYellow(state: GameState): GameState {
-  const hasYellow = state.items.some((item) => item.type === "yellow");
-  if (hasYellow || state.tick === 0 || state.tick % state.settings.yellowSpawnEvery !== 0) {
+function ensureStaticYellow(state: GameState): GameState {
+  const yellowItems = state.items.filter((item) => item.type === "yellow");
+  const hasStaticYellow = yellowItems.some((item) => item.expiresAtTick === undefined);
+  if (hasStaticYellow || yellowItems.length >= MAX_YELLOW_ITEMS) {
     return state;
   }
 
@@ -83,10 +122,36 @@ function maybeSpawnYellow(state: GameState): GameState {
   };
 }
 
+function maybeSpawnTimedYellow(state: GameState): GameState {
+  const yellowItems = state.items.filter((item) => item.type === "yellow");
+  const hasTimedYellow = yellowItems.some((item) => item.expiresAtTick !== undefined);
+  if (
+    hasTimedYellow ||
+    yellowItems.length >= MAX_YELLOW_ITEMS ||
+    state.tick === 0 ||
+    state.tick % state.settings.yellowSpawnEvery !== 0
+  ) {
+    return state;
+  }
+
+  const [yellow, nextSeed] = spawnItem(state, "yellow", state.rngSeed, {
+    expiresAtTick: state.tick + state.settings.yellowLifetime,
+  });
+  if (!yellow) {
+    return { ...state, rngSeed: nextSeed };
+  }
+
+  return {
+    ...state,
+    items: [...state.items, yellow],
+    rngSeed: nextSeed,
+  };
+}
+
 function maybeSpawnBad(state: GameState): GameState {
   const badItemCount = state.items.filter((item) => item.type === "bad").length;
   const progression = Math.floor(state.tick / 80);
-  const maxBadItems = Math.min(9, 3 + progression);
+  const maxBadItems = Math.min(15, 3 + progression);
   const spawnEvery = Math.max(8, state.settings.badSpawnEvery - progression * 2);
   if (badItemCount >= maxBadItems || state.tick === 0 || state.tick % spawnEvery !== 0) {
     return state;
@@ -219,9 +284,11 @@ export function tickGame(state: GameState): GameState {
     items,
   };
 
-  nextState = ensureGoodItem(nextState);
+  nextState = ensureGoodItems(nextState);
+  nextState = maybeSpawnTimedGood(nextState);
   nextState = maybeSpawnBonus(nextState);
-  nextState = maybeSpawnYellow(nextState);
+  nextState = ensureStaticYellow(nextState);
+  nextState = maybeSpawnTimedYellow(nextState);
   nextState = maybeSpawnBad(nextState);
 
   return nextState;

@@ -42,8 +42,8 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
   }
 
   const getEndingQuip = (scoreValue: number): string => {
-    if (scoreValue === 0) {
-      return "Give it another go, you'll get the hang of it!";
+    if (scoreValue <= 0) {
+      return "Better luck next time!";
     }
     if (scoreValue < 50) {
       return "You're getting the hang of it!";
@@ -51,13 +51,13 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
     if (scoreValue < 100) {
       return "Getting better, keep going!";
     }
-    if (scoreValue < 150) {
+    if (scoreValue < 200) {
       return "Yuuuuge! Keep it up!";
     }
-    if (scoreValue < 200) {
+    if (scoreValue < 300) {
       return "You're a natural! I bet you can do even better next time!";
     }
-    return "Woah, you're a pro! I bet next time you'll be better than ever!";
+    return "Let's f^#%ing go! Run it back!";
   };
 
   return (

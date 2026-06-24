@@ -17,9 +17,10 @@ const BASE_SETTINGS: Omit<GameSettings, "baseTicksPerMove"> = {
   speedStepEvery: 60,
   speedStepAmount: 1,
   minTicksPerMove: 5,
-  bonusSpawnEvery: 28,
-  bonusLifetime: 18,
+  bonusSpawnEvery: 20,
+  bonusLifetime: 30,
   yellowSpawnEvery: 24,
+  yellowLifetime: 18,
   badSpawnEvery: 20,
   badExpiresAfterGoodCollected: 5,
 };
