@@ -172,7 +172,7 @@ export function GameClient() {
         onResume={() => dispatch({ type: "resume" })}
         onRestart={() => dispatch({ type: "restart" })}
       />
-      <p className="text-sm text-white/65">
+      <p className="text-sm text-white/65 text-center">
         Move with arrows or WASD. Press <code>Spacebar</code> to start, pause,
         or resume. On mobile, use the arrow controls or swipe.
       </p>

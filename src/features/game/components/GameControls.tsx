@@ -16,7 +16,7 @@ export function GameControls({
   onRestart,
 }: GameControlsProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3 justify-center">
       {phase === "idle" && (
         <button
           type="button"

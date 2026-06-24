@@ -35,7 +35,7 @@ export function GameStartOverlay({
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#56b3ff]" aria-hidden />
               Blue = +20 points
-              {isHardMode ? " and +3 length" : ""}
+              {isHardMode ? " and +3 length (Hard)" : ""}
             </li>
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#ffd95b]" aria-hidden />
