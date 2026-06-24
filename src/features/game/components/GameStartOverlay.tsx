@@ -1,8 +1,18 @@
+import type { Difficulty } from "../engine/types";
+
 interface GameStartOverlayProps {
   onStart: () => void;
+  difficulty: Difficulty;
+  onDifficultyChange: (difficulty: Difficulty) => void;
 }
 
-export function GameStartOverlay({ onStart }: GameStartOverlayProps) {
+export function GameStartOverlay({
+  onStart,
+  difficulty,
+  onDifficultyChange,
+}: GameStartOverlayProps) {
+  const isHardMode = difficulty === "hard";
+
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
       <div className=".modal-body w-[320px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center">
@@ -20,10 +30,12 @@ export function GameStartOverlay({ onStart }: GameStartOverlayProps) {
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#8ae35f]" aria-hidden />
               Green = +10 points
+              {isHardMode ? " and +1 length" : ""}
             </li>
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#56b3ff]" aria-hidden />
               Blue = +20 points
+              {isHardMode ? " and +3 length" : ""}
             </li>
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#ffd95b]" aria-hidden />
@@ -37,9 +49,25 @@ export function GameStartOverlay({ onStart }: GameStartOverlayProps) {
         </div>
         <ul className="mt-4 space-y-1 text-sm text-white/75">
           <li>Use arrows or WASD to steer.</li>
-          <li>Press Space to start, pause, or resume instantly.</li>
+          <li>
+            Press <code>Spacebar</code> to start, pause, or resume instantly.
+          </li>
           <li>On mobile, use the arrow buttons below.</li>
         </ul>
+        <label className="mt-4 flex items-center justify-center gap-2 text-sm text-white/75">
+          Difficulty
+          <select
+            className="rounded-md border border-white/20 bg-[#1b1f2a] px-2 py-1 text-white"
+            value={difficulty}
+            onChange={(event) =>
+              onDifficultyChange(event.target.value as Difficulty)
+            }
+          >
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+            <option value="puzzle">Puzzle</option>
+          </select>
+        </label>
         <button
           type="button"
           onClick={onStart}

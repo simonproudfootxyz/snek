@@ -4,7 +4,7 @@ export type ItemType = "good" | "bonus" | "bad" | "yellow";
 
 export type GamePhase = "idle" | "running" | "paused" | "gameover";
 
-export type Difficulty = "easy" | "normal" | "hard";
+export type Difficulty = "normal" | "hard" | "puzzle";
 
 export interface Position {
   x: number;

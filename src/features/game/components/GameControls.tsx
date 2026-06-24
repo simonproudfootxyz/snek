@@ -1,23 +1,19 @@
-import type { Difficulty, GamePhase } from "../engine/types";
+import type { GamePhase } from "../engine/types";
 
 interface GameControlsProps {
   phase: GamePhase;
-  difficulty: Difficulty;
   onStart: () => void;
   onPause: () => void;
   onResume: () => void;
   onRestart: () => void;
-  onDifficultyChange: (difficulty: Difficulty) => void;
 }
 
 export function GameControls({
   phase,
-  difficulty,
   onStart,
   onPause,
   onResume,
   onRestart,
-  onDifficultyChange,
 }: GameControlsProps) {
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -55,18 +51,6 @@ export function GameControls({
       >
         Restart
       </button>
-      <label className="ml-auto flex items-center gap-2 text-sm text-white/75">
-        Difficulty
-        <select
-          className="rounded-md border border-white/20 bg-[#1b1f2a] px-2 py-1 text-white"
-          value={difficulty}
-          onChange={(event) => onDifficultyChange(event.target.value as Difficulty)}
-        >
-          <option value="easy">Easy</option>
-          <option value="normal">Normal</option>
-          <option value="hard">Hard</option>
-        </select>
-      </label>
     </div>
   );
 }

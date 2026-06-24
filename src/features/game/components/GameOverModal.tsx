@@ -49,13 +49,13 @@ export function GameOverModal({ score, onRestart }: GameOverModalProps) {
       return "You're getting the hang of it!";
     }
     if (scoreValue < 100) {
-      return "Getting better, keep going!";
+      return "Getting better, keep it going!";
     }
     if (scoreValue < 200) {
       return "Yuuuuge! Keep it up!";
     }
     if (scoreValue < 300) {
-      return "You're a natural! I bet you can do even better next time!";
+      return "Awesome! You're doing great!";
     }
     return "Let's f^#%ing go! Run it back!";
   };

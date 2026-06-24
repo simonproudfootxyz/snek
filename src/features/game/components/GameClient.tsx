@@ -148,7 +148,15 @@ export function GameClient() {
       <GameHUD state={state} />
       <div className="relative w-full max-w-[440px] game-canvas-container">
         <GameCanvas state={state} className="game-play-area" />
-        {state.phase === "idle" && <GameStartOverlay onStart={startGame} />}
+        {state.phase === "idle" && (
+          <GameStartOverlay
+            onStart={startGame}
+            difficulty={state.difficulty}
+            onDifficultyChange={(difficulty) =>
+              dispatch({ type: "set-difficulty", difficulty })
+            }
+          />
+        )}
         {state.phase === "gameover" && (
           <GameOverModal
             score={state.score}
@@ -159,18 +167,14 @@ export function GameClient() {
       <GameTouchControls onDirection={queue} />
       <GameControls
         phase={state.phase}
-        difficulty={state.difficulty}
         onStart={startGame}
         onPause={() => dispatch({ type: "pause" })}
         onResume={() => dispatch({ type: "resume" })}
         onRestart={() => dispatch({ type: "restart" })}
-        onDifficultyChange={(difficulty) =>
-          dispatch({ type: "set-difficulty", difficulty })
-        }
       />
       <p className="text-sm text-white/65">
-        Move with arrows or WASD. Press Spacebar to start, pause, or resume. On
-        mobile, use the arrow controls or swipe.
+        Move with arrows or WASD. Press <code>Spacebar</code> to start, pause,
+        or resume. On mobile, use the arrow controls or swipe.
       </p>
     </section>
   );

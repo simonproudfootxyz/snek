@@ -78,7 +78,7 @@ function createStructureShape(
 }
 
 function generateStructures(state: GameState): [Position[], number] {
-  if (state.difficulty !== "hard") {
+  if (state.difficulty !== "puzzle") {
     return [[], state.rngSeed];
   }
 
