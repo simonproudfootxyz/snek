@@ -65,7 +65,7 @@ export function GameStartOverlay({
           >
             <option value="normal">Normal</option>
             <option value="hard">Hard</option>
-            <option value="puzzle">Puzzle</option>
+            <option value="puzzle">Harderer</option>
             <option value="very-hard">Very Hard</option>
           </select>
         </label>
