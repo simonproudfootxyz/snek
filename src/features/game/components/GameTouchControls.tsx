@@ -25,7 +25,7 @@ function ArrowButton({
 
 export function GameTouchControls({ onDirection }: GameTouchControlsProps) {
   return (
-    <div className="grid w-fit grid-cols-3 gap-2 sm:hidden game-touch-controls">
+    <div className="grid w-fit gap-2 lg:hidden game-touch-controls">
       <div />
       <ArrowButton label="↑" onClick={() => onDirection("up")} />
       <div />
