@@ -30,7 +30,14 @@ type Action =
 
 function reducer(state: GameState, action: Action): GameState {
   if (action.type === "tick") {
-    return tickGame(state);
+    const nextState = tickGame(state);
+    if (state.phase === "running" && nextState.phase === "gameover") {
+      return {
+        ...nextState,
+        lastScore: nextState.score,
+      };
+    }
+    return nextState;
   }
 
   if (action.type === "queue-direction") {
@@ -62,6 +69,7 @@ function reducer(state: GameState, action: Action): GameState {
     return createInitialState({
       difficulty: state.difficulty,
       highScore: state.highScore,
+      lastScore: state.phase === "gameover" ? state.score : state.lastScore,
     });
   }
 
@@ -83,6 +91,7 @@ function reducer(state: GameState, action: Action): GameState {
   return createInitialState({
     difficulty: action.difficulty,
     highScore: state.highScore,
+    lastScore: state.lastScore,
   });
 }
 
@@ -90,6 +99,7 @@ function createStateFromStorage(): GameState {
   return createInitialState({
     difficulty: "normal",
     highScore: 0,
+    lastScore: 0,
   });
 }
 

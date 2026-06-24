@@ -29,6 +29,7 @@ const BASE_TICKS_BY_DIFFICULTY: Record<Difficulty, number> = {
   normal: 1000 / 150,
   hard: 1000 / 150,
   puzzle: 1000 / 130,
+  "very-hard": 1000 / 130,
 };
 
 export function getSettingsForDifficulty(difficulty: Difficulty): GameSettings {

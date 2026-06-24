@@ -7,6 +7,7 @@ import type { Difficulty, GameState, Position } from "./types";
 interface InitialOptions {
   difficulty: Difficulty;
   highScore?: number;
+  lastScore?: number;
   seed?: number;
 }
 
@@ -78,7 +79,7 @@ function createStructureShape(
 }
 
 function generateStructures(state: GameState): [Position[], number] {
-  if (state.difficulty !== "puzzle") {
+  if (state.difficulty !== "puzzle" && state.difficulty !== "very-hard") {
     return [[], state.rngSeed];
   }
 
@@ -164,6 +165,7 @@ export function createInitialState(options?: InitialOptions): GameState {
     phase: "idle",
     score: 0,
     highScore: options?.highScore ?? 0,
+    lastScore: options?.lastScore ?? 0,
     goodCollected: 0,
     tick: 0,
     ticksPerMove: settings.baseTicksPerMove,

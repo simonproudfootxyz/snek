@@ -26,3 +26,12 @@ body {
 .game-canvas-container {
   margin: 0 auto;
 }
+
+.game-touch-controls {
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+
+  button,
+  div {
+    width: 100%;
+  }
+}

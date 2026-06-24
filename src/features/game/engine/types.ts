@@ -4,7 +4,7 @@ export type ItemType = "good" | "bonus" | "bad" | "yellow";
 
 export type GamePhase = "idle" | "running" | "paused" | "gameover";
 
-export type Difficulty = "normal" | "hard" | "puzzle";
+export type Difficulty = "normal" | "hard" | "puzzle" | "very-hard";
 
 export interface Position {
   x: number;
@@ -39,6 +39,7 @@ export interface GameState {
   phase: GamePhase;
   score: number;
   highScore: number;
+  lastScore: number;
   goodCollected: number;
   tick: number;
   ticksPerMove: number;

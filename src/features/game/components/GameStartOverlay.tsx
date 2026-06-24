@@ -11,7 +11,7 @@ export function GameStartOverlay({
   difficulty,
   onDifficultyChange,
 }: GameStartOverlayProps) {
-  const isHardMode = difficulty === "hard";
+  const isHardLikeMode = difficulty === "hard" || difficulty === "very-hard";
 
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
@@ -30,12 +30,12 @@ export function GameStartOverlay({
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#8ae35f]" aria-hidden />
               Green = +10 points
-              {isHardMode ? " and +1 length" : ""}
+              {isHardLikeMode ? " and +1 length" : ""}
             </li>
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#56b3ff]" aria-hidden />
               Blue = +20 points
-              {isHardMode ? " and +3 length (Hard)" : ""}
+              {isHardLikeMode ? " and +3 length (Hard)" : ""}
             </li>
             <li className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-sm bg-[#ffd95b]" aria-hidden />
@@ -66,6 +66,7 @@ export function GameStartOverlay({
             <option value="normal">Normal</option>
             <option value="hard">Hard</option>
             <option value="puzzle">Puzzle</option>
+            <option value="very-hard">Very Hard</option>
           </select>
         </label>
         <button
