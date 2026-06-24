@@ -35,3 +35,7 @@ body {
     width: 100%;
   }
 }
+
+.game-canvas-container {
+  border: 6px solid var(--color-emerald-300);
+}

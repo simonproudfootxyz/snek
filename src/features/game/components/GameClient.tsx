@@ -169,6 +169,7 @@ export function GameClient() {
         )}
         {state.phase === "gameover" && (
           <GameOverModal
+            difficulty={state.difficulty}
             score={state.score}
             onRestart={() => dispatch({ type: "restart" })}
           />

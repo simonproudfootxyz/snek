@@ -12,8 +12,9 @@ export default function Home() {
             Snek, The Game
           </h1>
           <p className="max-w-2xl text-sm text-[var(--muted)] sm:text-base">
-            Collect green and blue items for points, avoid pink hazards, and
-            survive as the game speeds up.
+            Collect green, blue, and yellow items for points, avoid red items,
+            and survive as the game speeds up. Structures appear in harder
+            modes.
           </p>
         </header>
         <GameClient />

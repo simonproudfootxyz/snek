@@ -2,20 +2,26 @@
 
 import { useMemo, useState } from "react";
 import "./GameOverModal.css";
+import { Difficulty, difficultyLabels } from "../engine/types";
 
 interface GameOverModalProps {
   score: number;
+  difficulty: Difficulty;
   onRestart: () => void;
 }
 
-export function GameOverModal({ score, onRestart }: GameOverModalProps) {
+export function GameOverModal({
+  score,
+  difficulty,
+  onRestart,
+}: GameOverModalProps) {
   const [copied, setCopied] = useState(false);
   const origin = typeof window === "undefined" ? "" : window.location.origin;
-  const shareMessage = useMemo(
-    () =>
-      `Let's go! Just scored ${score} on Snek, The Game! Think you can beat me? ${origin}`,
-    [origin, score],
-  );
+  const nonNormalMode = difficulty !== "normal";
+  const difficultyLabel = difficultyLabels[difficulty];
+  const difficultySuffix = nonNormalMode ? ` in ${difficultyLabel} mode!` : "!";
+  const shareMessageText = `Let's go! Just scored ${score} on Snek, The Game${difficultySuffix} Think you can beat me? ${origin}`;
+  const shareMessage = useMemo(() => `${shareMessageText}`, [shareMessageText]);
   const twitterShareUrl = useMemo(
     () =>
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`,

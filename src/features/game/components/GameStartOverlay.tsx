@@ -1,4 +1,4 @@
-import type { Difficulty } from "../engine/types";
+import { difficultyLabels, type Difficulty } from "../engine/types";
 
 interface GameStartOverlayProps {
   onStart: () => void;
@@ -12,7 +12,7 @@ export function GameStartOverlay({
   onDifficultyChange,
 }: GameStartOverlayProps) {
   const isHardLikeMode = difficulty === "hard" || difficulty === "very-hard";
-
+  const hasStructures = difficulty === "puzzle" || difficulty === "very-hard";
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
       <div className=".modal-body w-[320px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center">
@@ -20,7 +20,8 @@ export function GameStartOverlay({
           Welcome to Snek, The Game
         </p>
         <p className="mt-2 text-lg font-semibold text-white">
-          Collect green, blue, and yellow items. Avoid red items and walls.
+          Collect green, blue, and yellow items. Avoid red items
+          {hasStructures ? ", structures, and walls." : " and walls."}
         </p>
         <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-3 text-left">
           <p className="text-xs uppercase tracking-wide text-white/60">
@@ -63,10 +64,13 @@ export function GameStartOverlay({
               onDifficultyChange(event.target.value as Difficulty)
             }
           >
-            <option value="normal">Normal</option>
-            <option value="hard">Hard</option>
-            <option value="puzzle">Harderer</option>
-            <option value="very-hard">Very Hard</option>
+            {Object.keys(difficultyLabels).map((difficulty) => {
+              return (
+                <option key={difficulty} value={difficulty}>
+                  {difficultyLabels[difficulty as Difficulty]}
+                </option>
+              );
+            })}
           </select>
         </label>
         <button
