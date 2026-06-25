@@ -7,7 +7,7 @@ export type GamePhase = "idle" | "running" | "paused" | "gameover";
 export type Difficulty = "normal" | "hard" | "puzzle" | "very-hard";
 export const difficultyLabels: Record<Difficulty, string> = {
   normal: "Normal",
-  hard: "Hard",
+  hard: "Harder",
   puzzle: "Harderer",
   "very-hard": "Diabolical",
 };
