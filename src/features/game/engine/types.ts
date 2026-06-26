@@ -8,7 +8,7 @@ export type Difficulty = "normal" | "hard" | "puzzle" | "very-hard";
 export const difficultyLabels: Record<Difficulty, string> = {
   normal: "Normal",
   hard: "Harder",
-  puzzle: "Harderer",
+  puzzle: "More Harder-er",
   "very-hard": "Diabolical",
 };
 

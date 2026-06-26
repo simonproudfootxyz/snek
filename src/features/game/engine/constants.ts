@@ -16,7 +16,7 @@ const BASE_SETTINGS: Omit<GameSettings, "baseTicksPerMove"> = {
   wrapWalls: false,
   speedStepEvery: 60,
   speedStepAmount: 1,
-  minTicksPerMove: 5,
+  minTicksPerMove: 4,
   bonusSpawnEvery: 20,
   bonusLifetime: 30,
   yellowSpawnEvery: 24,
@@ -28,8 +28,8 @@ const BASE_SETTINGS: Omit<GameSettings, "baseTicksPerMove"> = {
 const BASE_TICKS_BY_DIFFICULTY: Record<Difficulty, number> = {
   normal: 1000 / 150,
   hard: 1000 / 150,
-  puzzle: 1000 / 130,
-  "very-hard": 1000 / 130,
+  puzzle: 1000 / 150,
+  "very-hard": 1000 / 150,
 };
 
 export function getSettingsForDifficulty(difficulty: Difficulty): GameSettings {
