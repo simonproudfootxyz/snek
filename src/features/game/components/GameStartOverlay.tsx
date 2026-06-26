@@ -49,7 +49,10 @@ export function GameStartOverlay({
           </ul>
         </div>
         <ul className="mt-4 space-y-1 text-sm text-white/75">
-          <li>Use arrows or WASD to steer.</li>
+          <li>
+            Use your arrow keys, <code>WASD</code> keys, or touch the arrow
+            buttons below to steer.
+          </li>
           <li>
             Press <code>Spacebar</code> to start, pause, or resume instantly.
           </li>
