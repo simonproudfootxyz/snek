@@ -48,34 +48,62 @@ export function GameStartOverlay({
             </li>
           </ul>
         </div>
-        <ul className="mt-4 space-y-1 text-sm text-white/75">
-          <li>
+        <p>
+          <small>
             Use your arrow keys, <code>WASD</code> keys, or touch the arrow
-            buttons below to steer.
+            buttons below to steer. Press <code>Spacebar</code> to start, pause,
+            or resume instantly. On mobile, use the arrow buttons below.
+          </small>
+        </p>
+        {/* <ul className="mt-4 space-y-1 text-sm text-white/75">
+          <li>
+            <small>
+              Use your arrow keys, <code>WASD</code> keys, or touch the arrow
+              buttons below to steer.
+            </small>
           </li>
           <li>
-            Press <code>Spacebar</code> to start, pause, or resume instantly.
+            <small>
+              Press <code>Spacebar</code> to start, pause, or resume instantly.
+            </small>
           </li>
-          <li>On mobile, use the arrow buttons below.</li>
-        </ul>
-        <label className="mt-4 flex items-center justify-center gap-2 text-sm text-white/75">
-          Difficulty
-          <select
-            className="rounded-md border border-white/20 bg-[#1b1f2a] px-2 py-1 text-white"
-            value={difficulty}
-            onChange={(event) =>
-              onDifficultyChange(event.target.value as Difficulty)
-            }
-          >
-            {Object.keys(difficultyLabels).map((difficulty) => {
+          <li>
+            <small>On mobile, use the arrow buttons below.</small>
+          </li>
+        </ul> */}
+        <fieldset className="mt-4">
+          <legend className="mb-2 text-sm text-white/75">Difficulty</legend>
+          <div className="grid grid-cols-2 gap-2">
+            {Object.entries(difficultyLabels).map(([difficultyKey, label]) => {
+              const value = difficultyKey as Difficulty;
+              const isSelected = difficulty === value;
+              const id = `difficulty-${value}`;
+
               return (
-                <option key={difficulty} value={difficulty}>
-                  {difficultyLabels[difficulty as Difficulty]}
-                </option>
+                <label
+                  key={value}
+                  htmlFor={id}
+                  className={`cursor-pointer rounded-md border px-2 py-1 text-sm font-medium transition ${
+                    isSelected
+                      ? "border-emerald-300 bg-emerald-400/25 text-white"
+                      : "border-white/20 bg-[#1b1f2a] text-white/80 hover:bg-[#252b3a]"
+                  }`}
+                >
+                  <input
+                    id={id}
+                    type="radio"
+                    name="difficulty"
+                    value={value}
+                    checked={isSelected}
+                    onChange={() => onDifficultyChange(value)}
+                    className="sr-only"
+                  />
+                  {label}
+                </label>
               );
             })}
-          </select>
-        </label>
+          </div>
+        </fieldset>
         <button
           type="button"
           onClick={onStart}

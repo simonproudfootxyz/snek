@@ -1,5 +1,5 @@
 "use client";
-
+import "./GameClient.css";
 import { useCallback, useEffect, useMemo, useReducer } from "react";
 import { createInitialState } from "../engine/initialState";
 import { queueDirection, tickGame } from "../engine/updateGame";
@@ -150,7 +150,7 @@ export function GameClient() {
 
   return (
     <section
-      className="mx-auto flex w-full max-w-[980px] flex-col gap-6"
+      className="game-client-container mx-auto flex w-full max-w-[980px] flex-col gap-6"
       {...touchHandlers}
       role="application"
       aria-label="Snek game area"
@@ -175,18 +175,9 @@ export function GameClient() {
           />
         )}
       </div>
-      <GameTouchControls onDirection={queue} />
-      <GameControls
-        phase={state.phase}
-        onStart={startGame}
-        onPause={() => dispatch({ type: "pause" })}
-        onResume={() => dispatch({ type: "resume" })}
-        onRestart={() => dispatch({ type: "restart" })}
-      />
-      <p className="text-sm text-white/65 text-center">
-        Move with arrows or WASD. Press <code>Spacebar</code> to start, pause,
-        or resume. On mobile, use the arrow controls or swipe.
-      </p>
+      <div className="game-controls-container">
+        <GameTouchControls onDirection={queue} />
+      </div>
     </section>
   );
 }

@@ -1,0 +1,20 @@
+.game-client-container {
+  @media (max-width: 768px) {
+    padding-bottom: 16rem;
+  }
+}
+
+.game-controls-container {
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0px -0.25rem 0.5rem rgb(0, 0, 0);
+  }
+}
