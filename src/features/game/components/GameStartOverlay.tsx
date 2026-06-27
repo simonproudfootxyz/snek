@@ -23,7 +23,7 @@ export function GameStartOverlay({
           Collect green, blue, and yellow items. Avoid red items
           {hasStructures ? ", structures, and walls." : " and walls."}
         </p>
-        <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-3 text-left">
+        <div className="mt-2 rounded-lg border border-white/10 bg-white/5 p-3 text-left">
           <p className="text-xs uppercase tracking-wide text-white/60">
             Square legend
           </p>
@@ -48,7 +48,7 @@ export function GameStartOverlay({
             </li>
           </ul>
         </div>
-        <p>
+        <p className="mt-2">
           <small>
             Use your arrow keys, <code>WASD</code> keys, or touch the arrow
             buttons below to steer. Press <code>Spacebar</code> to start, pause,
@@ -71,7 +71,7 @@ export function GameStartOverlay({
             <small>On mobile, use the arrow buttons below.</small>
           </li>
         </ul> */}
-        <fieldset className="mt-4">
+        <fieldset className="mt-2">
           <legend className="mb-2 text-sm text-white/75">Difficulty</legend>
           <div className="grid grid-cols-2 gap-2">
             {Object.entries(difficultyLabels).map(([difficultyKey, label]) => {
@@ -107,7 +107,7 @@ export function GameStartOverlay({
         <button
           type="button"
           onClick={onStart}
-          className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+          className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
         >
           Start game
         </button>

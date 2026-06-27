@@ -112,7 +112,7 @@ export function GameOverModal({
         <button
           type="button"
           onClick={onRestart}
-          className="mt-5 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+          className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
         >
           Play again
         </button>
