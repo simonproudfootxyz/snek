@@ -50,18 +50,9 @@ export function GameStartOverlay({
         </div>
         <ul className="mt-4 space-y-1 text-sm text-white/75">
           <li>
-            <small>
-              Use your arrow keys, <code>WASD</code> keys to steer.
-            </small>
+            Use your arrow keys, <code>WASD</code> keys to steer.
           </li>
-          <li>
-            <small>
-              Press <code>Spacebar</code> to start, pause, or resume instantly.
-            </small>
-          </li>
-          <li>
-            <small>On mobile, use the arrow buttons to navigate.</small>
-          </li>
+          <li>On mobile, use the arrow buttons to navigate.</li>
         </ul>
         <fieldset className="mt-2">
           <legend className="mb-2 text-sm text-white/75">Difficulty</legend>
@@ -96,13 +87,18 @@ export function GameStartOverlay({
             })}
           </div>
         </fieldset>
-        <button
-          type="button"
-          onClick={onStart}
-          className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
-        >
-          Start game
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={onStart}
+            className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+          >
+            Start game
+          </button>
+          <p className="mt-2 text-sm text-white/75">
+            Press <code>Spacebar</code> to start, pause, or resume instantly.
+          </p>
+        </div>
       </div>
     </div>
   );

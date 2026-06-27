@@ -55,7 +55,7 @@ export function GameOverModal({
       return "You're getting the hang of it!";
     }
     if (scoreValue < 100) {
-      return "Getting better, keep it going!";
+      return "Getting better, keep going!";
     }
     if (scoreValue < 200) {
       return "Yuuuuge! Keep it up!";
@@ -73,8 +73,8 @@ export function GameOverModal({
           Run ended, you scored:
         </p>
         <p className="mt-2 text-3xl font-semibold text-white">{score}</p>
-        <p className="mt-1 text-sm text-white/70">{getEndingQuip(score)}</p>
-        <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+        <p className="mt-2 text-sm text-white/70">{getEndingQuip(score)}</p>
+        <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
           <a
             href={twitterShareUrl}
             target="_blank"
@@ -106,7 +106,7 @@ export function GameOverModal({
             }}
             className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 font-semibold text-white transition hover:bg-white/20"
           >
-            {copied ? "Copied!" : "Copy text"}
+            {copied ? "Copied!" : "Share Results"}
           </button>
         </div>
         <button
