@@ -48,18 +48,10 @@ export function GameStartOverlay({
             </li>
           </ul>
         </div>
-        <p className="mt-2">
-          <small>
-            Use your arrow keys, <code>WASD</code> keys, or touch the arrow
-            buttons below to steer. Press <code>Spacebar</code> to start, pause,
-            or resume instantly. On mobile, use the arrow buttons below.
-          </small>
-        </p>
-        {/* <ul className="mt-4 space-y-1 text-sm text-white/75">
+        <ul className="mt-4 space-y-1 text-sm text-white/75">
           <li>
             <small>
-              Use your arrow keys, <code>WASD</code> keys, or touch the arrow
-              buttons below to steer.
+              Use your arrow keys, <code>WASD</code> keys to steer.
             </small>
           </li>
           <li>
@@ -68,9 +60,9 @@ export function GameStartOverlay({
             </small>
           </li>
           <li>
-            <small>On mobile, use the arrow buttons below.</small>
+            <small>On mobile, use the arrow buttons to navigate.</small>
           </li>
-        </ul> */}
+        </ul>
         <fieldset className="mt-2">
           <legend className="mb-2 text-sm text-white/75">Difficulty</legend>
           <div className="grid grid-cols-2 gap-2">

@@ -1,11 +1,11 @@
 .game-client-container {
-  @media (max-width: 768px) {
+  @media (max-width: 1180px) {
     padding-bottom: 16rem;
   }
 }
 
 .game-controls-container {
-  @media (max-width: 768px) {
+  @media (max-width: 1180px) {
     padding: 0.5rem 1rem;
     background: var(--panel);
     display: flex;
