@@ -61,7 +61,7 @@ export default async function LeaderboardPage({
           </section>
         </div>
 
-        <LeaderboardTable entries={entries} />
+        <LeaderboardTable entries={entries} allDifficulties={true} />
       </main>
     </div>
   );

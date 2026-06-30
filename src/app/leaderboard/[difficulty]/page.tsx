@@ -75,7 +75,7 @@ export default async function DifficultyLeaderboardPage({
           </section>
         </div>
 
-        <LeaderboardTable entries={entries} />
+        <LeaderboardTable entries={entries} currentDifficulty={difficulty} />
         <Link
           href="/leaderboard"
           className="w-fit rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"

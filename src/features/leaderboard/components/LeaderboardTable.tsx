@@ -1,15 +1,25 @@
 import { Difficulty, difficultyLabels } from "@/features/game/engine/types";
 import type { LeaderboardEntry } from "../domain/types";
+import { getDifficultyLabels } from "@/app/leaderboard/page";
 
 interface LeaderboardTableProps {
   entries: LeaderboardEntry[];
+  allDifficulties?: boolean;
+  currentDifficulty?: Difficulty;
 }
 
-export function LeaderboardTable({ entries }: LeaderboardTableProps) {
+export function LeaderboardTable({
+  entries,
+  allDifficulties,
+  currentDifficulty,
+}: LeaderboardTableProps) {
   if (entries.length === 0) {
     return (
       <p className="rounded-lg border border-white/15 bg-white/5 p-4 text-sm text-white/70">
-        No leaderboard entries found for the selected filter.
+        No leaderboard entries found for{" "}
+        {allDifficulties
+          ? "all difficulties"
+          : `${getDifficultyLabels(currentDifficulty as Difficulty)} mode`}
       </p>
     );
   }
@@ -22,7 +32,9 @@ export function LeaderboardTable({ entries }: LeaderboardTableProps) {
             <th className="px-3 py-2 font-semibold">Rank</th>
             <th className="px-3 py-2 font-semibold">Player</th>
             <th className="px-3 py-2 font-semibold">Score</th>
-            <th className="px-3 py-2 font-semibold">Difficulty</th>
+            {allDifficulties && (
+              <th className="px-3 py-2 font-semibold">Difficulty</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -39,7 +51,9 @@ export function LeaderboardTable({ entries }: LeaderboardTableProps) {
                 <td className="px-3 py-2 font-semibold text-emerald-300">
                   {entry.score}
                 </td>
-                <td className="px-3 py-2 text-white/80">{difficultyLabel}</td>
+                {allDifficulties && (
+                  <td className="px-3 py-2 text-white/80">{difficultyLabel}</td>
+                )}
               </tr>
             );
           })}

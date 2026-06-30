@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, gte, lt, sql, or } from "drizzle-orm";
+import { and, desc, eq, gt, gte, lt, not, sql, or } from "drizzle-orm";
 import type { LeaderboardDifficulty } from "../domain/constants";
 import type { LeaderboardEntry } from "../domain/types";
 import type { SubmitLeaderboardEntryInput } from "../domain/schema";
@@ -10,6 +10,26 @@ interface ListTopEntriesParams {
   limit: number;
   start?: Date;
   end?: Date;
+}
+
+export function buildRowsAheadOfEntryPredicate(entry: LeaderboardEntry) {
+  return and(
+    not(eq(leaderboardEntries.id, entry.id)),
+    eq(leaderboardEntries.difficulty, entry.difficulty),
+    or(
+      gt(leaderboardEntries.score, entry.score),
+      and(
+        eq(leaderboardEntries.score, entry.score),
+        or(
+          gt(leaderboardEntries.createdAt, entry.createdAt),
+          and(
+            eq(leaderboardEntries.createdAt, entry.createdAt),
+            gt(leaderboardEntries.id, entry.id),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 function mapRowToEntry(row: typeof leaderboardEntries.$inferSelect): LeaderboardEntry {
@@ -51,7 +71,11 @@ export async function listTopEntries(params: ListTopEntriesParams) {
 
   const rows = await db.query.leaderboardEntries.findMany({
     where: predicates.length > 0 ? and(...predicates) : undefined,
-    orderBy: [desc(leaderboardEntries.score), desc(leaderboardEntries.createdAt)],
+    orderBy: [
+      desc(leaderboardEntries.score),
+      desc(leaderboardEntries.createdAt),
+      desc(leaderboardEntries.id),
+    ],
     limit: params.limit,
   });
 
@@ -65,18 +89,7 @@ export async function getEntryRank(entry: LeaderboardEntry): Promise<number> {
       count: sql<number>`count(*)`,
     })
     .from(leaderboardEntries)
-    .where(
-      and(
-        eq(leaderboardEntries.difficulty, entry.difficulty),
-        or(
-          gt(leaderboardEntries.score, entry.score),
-          and(
-            eq(leaderboardEntries.score, entry.score),
-            gt(leaderboardEntries.createdAt, entry.createdAt),
-          ),
-        ),
-      ),
-    );
+    .where(buildRowsAheadOfEntryPredicate(entry));
 
   return Number(result.count) + 1;
 }
