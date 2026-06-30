@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import "./GameOverModal.css";
+import { LeaderboardSubmitForm } from "@/features/leaderboard/components/LeaderboardSubmitForm";
+import type { SubmitLeaderboardEntrySuccessResponse } from "@/features/leaderboard/domain/types";
+import { LEADERBOARD_MIN_SCORE } from "@/features/leaderboard/domain/constants";
 import { Difficulty, difficultyLabels } from "../engine/types";
 
 interface GameOverModalProps {
@@ -16,10 +20,12 @@ export function GameOverModal({
   onRestart,
 }: GameOverModalProps) {
   const [copied, setCopied] = useState(false);
+  const [leaderboardPath, setLeaderboardPath] = useState<string | null>(null);
   const origin = typeof window === "undefined" ? "" : window.location.origin;
   const nonNormalMode = difficulty !== "normal";
   const difficultyLabel = difficultyLabels[difficulty];
   const difficultySuffix = nonNormalMode ? ` in ${difficultyLabel} mode!` : "!";
+  const canSubmitToLeaderboard = score >= LEADERBOARD_MIN_SCORE;
   const shareMessageText = `Let's go! Just scored ${score} on Snek, The Game${difficultySuffix} Think you can beat me? ${origin}`;
   const shareMessage = useMemo(() => `${shareMessageText}`, [shareMessageText]);
   const twitterShareUrl = useMemo(
@@ -61,10 +67,16 @@ export function GameOverModal({
       return "Yuuuuge! Keep it up!";
     }
     if (scoreValue < 300) {
-      return "Awesome! You're doing great!";
+      return "Party time! Excellent!";
     }
     return "Let's f^#%ing go! Run it back!";
   };
+
+  function handleSubmissionSuccess(
+    submission: SubmitLeaderboardEntrySuccessResponse,
+  ) {
+    setLeaderboardPath(submission.leaderboardPath);
+  }
 
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
@@ -109,13 +121,34 @@ export function GameOverModal({
             {copied ? "Copied!" : "Share Results"}
           </button>
         </div>
-        <button
-          type="button"
-          onClick={onRestart}
-          className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
-        >
-          Play again
-        </button>
+        {canSubmitToLeaderboard ? (
+          <LeaderboardSubmitForm
+            score={score}
+            difficulty={difficulty}
+            onSubmissionSuccess={handleSubmissionSuccess}
+          />
+        ) : (
+          <p className="mt-3 text-xs text-white/60">
+            Reach {LEADERBOARD_MIN_SCORE}+ points to submit to the leaderboard.
+          </p>
+        )}
+        <div className="mt-2 flex items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={onRestart}
+            className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+          >
+            Play again
+          </button>
+          {leaderboardPath && (
+            <Link
+              href={leaderboardPath}
+              className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+            >
+              View leaderboard
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -34,3 +34,49 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Leaderboard Setup
+
+The leaderboard API uses Neon Postgres + Drizzle ORM.
+
+### Environment variables
+
+Create a `.env` file at the project root with:
+
+```bash
+DATABASE_URL="postgres://<user>:<password>@<host>/<database>?sslmode=require"
+LOG_LEVEL="info"
+```
+
+`DATABASE_URL` should point to your Neon connection string.
+
+### Database workflow
+
+Generate SQL migrations after schema changes:
+
+```bash
+npm run db:generate
+```
+
+Apply pending migrations:
+
+```bash
+npm run db:migrate
+```
+
+### Leaderboard API
+
+- `POST /api/leaderboard`
+  - Accepts `{ playerName, score, difficulty }`
+  - Requires `score >= 300`
+  - Returns `429` when the in-memory rate limit is exceeded
+- `GET /api/leaderboard?difficulty=<value>&limit=<number>`
+  - Returns top scores sorted by score descending, then newest first
+
+### Testing
+
+Run leaderboard and service tests with:
+
+```bash
+npm run test
+```
