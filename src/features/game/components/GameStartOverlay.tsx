@@ -11,8 +11,8 @@ export function GameStartOverlay({
   difficulty,
   onDifficultyChange,
 }: GameStartOverlayProps) {
-  const isHardLikeMode = difficulty === "hard" || difficulty === "very-hard";
-  const hasStructures = difficulty === "puzzle" || difficulty === "very-hard";
+  const isHardLikeMode = difficulty === "hard" || difficulty === "diabolical";
+  const hasStructures = difficulty === "puzzle" || difficulty === "diabolical";
   return (
     <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
       <div className=".modal-body w-[320px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center">

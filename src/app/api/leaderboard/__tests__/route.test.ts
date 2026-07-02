@@ -73,4 +73,35 @@ describe("POST /api/leaderboard", () => {
     expect(body.leaderboardPath).toBe("/leaderboard/normal");
     expect(submitEntry).toHaveBeenCalledOnce();
   });
+
+  it("accepts legacy very-hard and normalizes to diabolical", async () => {
+    vi.mocked(isAllowedToSubmitLeaderboard).mockReturnValue(true);
+    vi.mocked(submitEntry).mockResolvedValue({
+      entry: {
+        id: "entry-2",
+        playerName: "Simon",
+        score: LEADERBOARD_MIN_SCORE,
+        difficulty: "diabolical",
+        createdAt: new Date("2026-01-01T00:00:00.000Z"),
+      },
+      rank: 4,
+      leaderboardPath: "/leaderboard/diabolical",
+    });
+
+    const request = new NextRequest("http://localhost:3000/api/leaderboard", {
+      method: "POST",
+      body: JSON.stringify({
+        playerName: "Simon",
+        score: LEADERBOARD_MIN_SCORE,
+        difficulty: "very-hard",
+      }),
+      headers: { "content-type": "application/json" },
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(201);
+    expect(submitEntry).toHaveBeenCalledWith(
+      expect.objectContaining({ difficulty: "diabolical" }),
+    );
+  });
 });

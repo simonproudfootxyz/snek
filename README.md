@@ -68,10 +68,19 @@ npm run db:migrate
 
 - `POST /api/leaderboard`
   - Accepts `{ playerName, score, difficulty }`
+  - Canonical difficulty key is `diabolical`
+  - Legacy `very-hard` is accepted and normalized to `diabolical`
   - Requires `score >= 300`
   - Returns `429` when the in-memory rate limit is exceeded
 - `GET /api/leaderboard?difficulty=<value>&limit=<number>`
   - Returns top scores sorted by score descending, then newest first
+  - Legacy `difficulty=very-hard` is accepted and normalized to `diabolical`
+
+### Difficulty compatibility window
+
+- Canonical leaderboard/game key: `diabolical`
+- Legacy `/leaderboard/very-hard` redirects to `/leaderboard/diabolical`
+- Existing DB rows with `very-hard` should be migrated to `diabolical`
 
 ### Testing
 

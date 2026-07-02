@@ -10,7 +10,7 @@ export const LEADERBOARD_DIFFICULTIES = [
   "normal",
   "hard",
   "puzzle",
-  "very-hard",
+  "diabolical",
 ] as const;
 
 export const LEADERBOARD_TIMEFRAMES = [

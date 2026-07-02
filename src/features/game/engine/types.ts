@@ -4,12 +4,12 @@ export type ItemType = "good" | "bonus" | "bad" | "yellow";
 
 export type GamePhase = "idle" | "running" | "paused" | "gameover";
 
-export type Difficulty = "normal" | "hard" | "puzzle" | "very-hard";
+export type Difficulty = "normal" | "hard" | "puzzle" | "diabolical";
 export const difficultyLabels: Record<Difficulty, string> = {
   normal: "Normal",
   hard: "Harder",
   puzzle: "More Harder-er",
-  "very-hard": "Diabolical",
+  diabolical: "Diabolical",
 };
 
 export interface Position {

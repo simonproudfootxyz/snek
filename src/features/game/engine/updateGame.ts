@@ -240,7 +240,7 @@ export function tickGame(state: GameState): GameState {
 
   if (
     collectedItem?.type === "bonus" &&
-    (state.difficulty === "hard" || state.difficulty === "very-hard")
+    (state.difficulty === "hard" || state.difficulty === "diabolical")
   ) {
     for (let bonusGrowth = 0; bonusGrowth < 2; bonusGrowth += 1) {
       const currentTail = nextSnake[nextSnake.length - 1];

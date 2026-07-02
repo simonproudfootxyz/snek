@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { LeaderboardTable } from "@/features/leaderboard/components/LeaderboardTable";
 import { LeaderboardTimeframeNav } from "@/features/leaderboard/components/LeaderboardTimeframeNav";
 import {
   LEADERBOARD_DIFFICULTIES,
   LEADERBOARD_TOP_PAGE_LIMIT,
 } from "@/features/leaderboard/domain/constants";
+import {
+  isLegacyDifficultyKey,
+  normalizeDifficultyKey,
+} from "@/features/leaderboard/domain/difficultyCompat";
 import { getLeaderboard } from "@/features/leaderboard/server/service";
 import { parseDifficultyLeaderboardTimeframe } from "@/features/leaderboard/server/timeframeParse";
 import { difficultyLabels } from "@/features/game/engine/types";
@@ -21,16 +25,15 @@ export default async function DifficultyLeaderboardPage({
   searchParams,
 }: DifficultyLeaderboardPageProps) {
   const resolvedParams = await params;
-  if (
-    !LEADERBOARD_DIFFICULTIES.includes(
-      resolvedParams.difficulty as (typeof LEADERBOARD_DIFFICULTIES)[number],
-    )
-  ) {
+  if (isLegacyDifficultyKey(resolvedParams.difficulty)) {
+    redirect("/leaderboard/diabolical");
+  }
+
+  const difficulty = normalizeDifficultyKey(resolvedParams.difficulty);
+  if (!difficulty) {
     notFound();
   }
 
-  const difficulty =
-    resolvedParams.difficulty as (typeof LEADERBOARD_DIFFICULTIES)[number];
   const resolvedSearchParams = (await searchParams) ?? {};
   const timeframe = parseDifficultyLeaderboardTimeframe(resolvedSearchParams);
   const entries = await getLeaderboard({
