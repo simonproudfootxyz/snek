@@ -64,6 +64,29 @@ Apply pending migrations:
 npm run db:migrate
 ```
 
+Manual seed (reset + insert demo leaderboard rows):
+
+```bash
+npm run db:seed
+```
+
+Manual reset-seed helper:
+
+```bash
+npm run db:reset-seed
+```
+
+Seed behavior notes:
+- Seeding is **manual only** and is not tied to deployment/build/start scripts.
+- `db:seed` is destructive for leaderboard data (deletes current `leaderboard_entries` rows first).
+- Seed inserts exactly 100 rows for each difficulty (`normal`, `hard`, `puzzle`, `diabolical`) and enforces:
+  - minimum score >= 300,
+  - `normal`: 300-500,
+  - `hard`: 300-450,
+  - `puzzle`: 300-475,
+  - `diabolical`: 300-425.
+- Seed distribution is intentionally skewed toward lower scores, with only a small handful of near-max scores per difficulty.
+
 ### Leaderboard API
 
 - `POST /api/leaderboard`
@@ -88,4 +111,13 @@ Run leaderboard and service tests with:
 
 ```bash
 npm run test
+```
+
+### Railway manual seed
+
+Run seeding only when you explicitly want it:
+
+```bash
+railway run npm run db:migrate
+railway run npm run db:seed
 ```
