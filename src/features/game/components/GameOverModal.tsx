@@ -133,13 +133,6 @@ export function GameOverModal({
           </p>
         )}
         <div className="mt-2 flex items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={onRestart}
-            className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
-          >
-            Play again
-          </button>
           {leaderboardPath && (
             <Link
               href={leaderboardPath}
@@ -148,6 +141,13 @@ export function GameOverModal({
               View leaderboard
             </Link>
           )}
+          <button
+            type="button"
+            onClick={onRestart}
+            className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+          >
+            Play again
+          </button>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import { getLeaderboard } from "@/features/leaderboard/server/service";
 import { parseDifficultyLeaderboardTimeframe } from "@/features/leaderboard/server/timeframeParse";
 import { difficultyLabels } from "@/features/game/engine/types";
 import { getDifficultyLabels } from "../page";
+import { GameHeader } from "@/features/game/components/GameHeader";
 
 interface DifficultyLeaderboardPageProps {
   params: Promise<{ difficulty: string }>;
@@ -46,12 +47,7 @@ export default async function DifficultyLeaderboardPage({
     <div className="flex min-h-screen flex-col bg-[var(--surface)] text-[var(--text)]">
       <main className="mx-auto flex w-full max-w-[1100px] flex-1 flex-col gap-6 px-5 py-8 sm:px-8 sm:py-10">
         <header className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
-            Leaderboard
-          </p>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Snek, The Game
-          </h1>
+          <GameHeader byLine="Leaderboard" />
           <h3>
             Top 100 Scores - <code>{difficultyLabels[difficulty]}</code> mode
           </h3>

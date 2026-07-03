@@ -50,7 +50,8 @@ export function GameStartOverlay({
         </div>
         <ul className="mt-4 space-y-1 text-sm text-white/75">
           <li>
-            Use your arrow keys, <code>WASD</code> keys to steer.
+            Use your arrow keys (<code>↑,↓,←,→</code>) or <code>WASD</code> keys
+            to steer.
           </li>
           <li>On mobile, use the arrow buttons to navigate.</li>
         </ul>
