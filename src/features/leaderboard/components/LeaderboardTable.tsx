@@ -16,10 +16,9 @@ export function LeaderboardTable({
   if (entries.length === 0) {
     return (
       <p className="rounded-lg border border-white/15 bg-white/5 p-4 text-sm text-white/70">
-        No leaderboard entries found for{" "}
-        {allDifficulties
-          ? "all difficulties"
-          : `${getDifficultyLabels(currentDifficulty as Difficulty)} mode`}
+        No leaderboard entries found
+        {allDifficulties &&
+          `for ${getDifficultyLabels(currentDifficulty as Difficulty)} mode`}
       </p>
     );
   }

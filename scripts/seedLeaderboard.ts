@@ -154,9 +154,7 @@ function randomIntInclusive(min: number, max: number): number {
 
 function randomScoreInStepRange(min: number, max: number): number {
   if (min % SCORE_STEP !== 0 || max % SCORE_STEP !== 0) {
-    throw new Error(
-      `Range [${min}, ${max}] must align to step ${SCORE_STEP}`,
-    );
+    throw new Error(`Range [${min}, ${max}] must align to step ${SCORE_STEP}`);
   }
 
   const steps = Math.floor((max - min) / SCORE_STEP);
@@ -166,9 +164,7 @@ function randomScoreInStepRange(min: number, max: number): number {
 
 function randomScoreSkewedTowardMin(min: number, max: number): number {
   if (min % SCORE_STEP !== 0 || max % SCORE_STEP !== 0) {
-    throw new Error(
-      `Range [${min}, ${max}] must align to step ${SCORE_STEP}`,
-    );
+    throw new Error(`Range [${min}, ${max}] must align to step ${SCORE_STEP}`);
   }
 
   const steps = Math.floor((max - min) / SCORE_STEP);
@@ -181,7 +177,9 @@ function generatePlayerName(difficulty: Difficulty, rank: number): string {
   const nameParts = DIFFICULTY_NAME_PARTS[difficulty];
   const first = nameParts.first[rank % nameParts.first.length];
   const second =
-    nameParts.second[Math.floor(rank / nameParts.first.length) % nameParts.second.length];
+    nameParts.second[
+      Math.floor(rank / nameParts.first.length) % nameParts.second.length
+    ];
   return toSeedSafeName(`${first} ${second}`);
 }
 

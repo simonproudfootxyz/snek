@@ -15,7 +15,6 @@ interface LeaderboardPageProps {
 }
 
 export const getDifficultyLabels = (difficulty: Difficulty) => {
-  console.log(difficultyLabels[difficulty]);
   return difficultyLabels[difficulty];
 };
 
@@ -45,6 +44,12 @@ export default async function LeaderboardPage({
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">
+              <Link
+                href={`/leaderboard`}
+                className="rounded-md border px-3 py-1.5 text-sm font-medium transition border-emerald-300 bg-emerald-300/20 text-emerald-200"
+              >
+                All
+              </Link>
               {LEADERBOARD_DIFFICULTIES.map((difficulty) => (
                 <Link
                   key={difficulty}

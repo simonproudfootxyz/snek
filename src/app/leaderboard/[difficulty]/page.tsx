@@ -61,15 +61,31 @@ export default async function DifficultyLeaderboardPage({
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">
-              {LEADERBOARD_DIFFICULTIES.map((difficulty) => (
-                <Link
-                  key={difficulty}
-                  href={`/leaderboard/${difficulty}`}
-                  className="rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"
-                >
-                  {getDifficultyLabels(difficulty)}
-                </Link>
-              ))}
+              <Link
+                href={`/leaderboard`}
+                className="rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"
+              >
+                All
+              </Link>
+              {LEADERBOARD_DIFFICULTIES.map((difficultyKey) => {
+                const highlightedClasses =
+                  "rounded-md border px-3 py-1.5 text-sm font-medium transition border-emerald-300 bg-emerald-300/20 text-emerald-200";
+                const defaultClasses =
+                  "rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10";
+                const selectedClasses =
+                  difficultyKey === difficulty
+                    ? highlightedClasses
+                    : defaultClasses;
+                return (
+                  <Link
+                    key={difficultyKey}
+                    href={`/leaderboard/${difficultyKey}`}
+                    className={selectedClasses}
+                  >
+                    {getDifficultyLabels(difficultyKey)}
+                  </Link>
+                );
+              })}
             </div>
           </section>
         </div>
