@@ -35,12 +35,8 @@ code {
 }
 
 .game-touch-controls {
-  display: none;
+  display: grid;
   grid-template-columns: repeat(3, minmax(100px, 1fr));
-
-  @media (max-width: 1180px) {
-    display: grid;
-  }
 
   button,
   div {
