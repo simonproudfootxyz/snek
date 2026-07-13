@@ -76,6 +76,7 @@ code {
 
 .game-canvas-container {
   border: 6px solid var(--primary-color);
+  transition: all 0.2s ease;
 }
 
 .game-canvas-container--active {
