@@ -1,6 +1,7 @@
 import { Difficulty, difficultyLabels } from "@/features/game/engine/types";
 import type { LeaderboardEntry } from "../domain/types";
 import { getDifficultyLabels } from "@/app/leaderboard/page";
+import "./LeaderboardTable.css";
 
 interface LeaderboardTableProps {
   entries: LeaderboardEntry[];
@@ -43,11 +44,11 @@ export function LeaderboardTable({
             return (
               <tr
                 key={entry.id}
-                className="border-b border-white/10 last:border-b-0"
+                className="border-b border-white/10 last:border-b-0 leaderboard-entry"
               >
                 <td className="px-3 py-2 text-white/80">#{index + 1}</td>
                 <td className="px-3 py-2 text-white">{entry.playerName}</td>
-                <td className="px-3 py-2 font-semibold text-emerald-300">
+                <td className="px-3 py-2 font-semibold leaderboard-entry__score">
                   {entry.score}
                 </td>
                 {allDifficulties && (

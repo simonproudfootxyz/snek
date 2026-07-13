@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import "./GameOverModal.css";
 import { LeaderboardSubmitForm } from "@/features/leaderboard/components/LeaderboardSubmitForm";
 import type { SubmitLeaderboardEntrySuccessResponse } from "@/features/leaderboard/domain/types";
 import { LEADERBOARD_MIN_SCORE } from "@/features/leaderboard/domain/constants";
 import { Difficulty, difficultyLabels } from "../engine/types";
+import { InvertButton, PrimaryButton } from "@/features/ui/components/Button";
+import Modal from "@/features/ui/components/Modal/Modal";
+import { InvertLink } from "@/features/ui/components/Link";
 
 interface GameOverModalProps {
   score: number;
@@ -79,8 +81,8 @@ export function GameOverModal({
   }
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
-      <div className="w-[340px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center game-over-modal">
+    <Modal size="sm" closeOnBackdrop={false} contained>
+      <div className="w-[340px] text-center game-over-modal">
         <p className="text-xs uppercase tracking-[0.2em] text-white/55">
           Run ended, you scored:
         </p>
@@ -91,7 +93,7 @@ export function GameOverModal({
             href={twitterShareUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 font-semibold text-white transition hover:bg-white/20"
+            className="button button--invert px-3 py-2 font-semibold"
           >
             Share on X
           </a>
@@ -99,7 +101,7 @@ export function GameOverModal({
             href={blueskyShareUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 font-semibold text-white transition hover:bg-white/20"
+            className="button button--invert px-3 py-2 font-semibold"
           >
             Share on Bluesky
           </a>
@@ -107,19 +109,19 @@ export function GameOverModal({
             href={redditShareUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 font-semibold text-white transition hover:bg-white/20"
+            className="button button--invert px-3 py-2 font-semibold"
           >
             Share on Reddit
           </a>
-          <button
+          <InvertButton
             type="button"
             onClick={() => {
               void handleCopy();
             }}
-            className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 font-semibold text-white transition hover:bg-white/20"
+            className="px-3 py-2 font-semibold"
           >
             {copied ? "Copied!" : "Share Results"}
-          </button>
+          </InvertButton>
         </div>
         {canSubmitToLeaderboard ? (
           <LeaderboardSubmitForm
@@ -134,22 +136,18 @@ export function GameOverModal({
         )}
         <div className="mt-2 flex items-center justify-center gap-2">
           {leaderboardPath && (
-            <Link
+            <InvertLink
               href={leaderboardPath}
-              className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+              className="px-4 py-2 text-sm font-semibold"
             >
               View leaderboard
-            </Link>
+            </InvertLink>
           )}
-          <button
-            type="button"
-            onClick={onRestart}
-            className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
-          >
+          <PrimaryButton type="button" onClick={onRestart} className="px-4 py-2 text-sm">
             Play again
-          </button>
+          </PrimaryButton>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

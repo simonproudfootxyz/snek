@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { LeaderboardTimeframe } from "../domain/constants";
+import { InvertLink, PrimaryInvertLink } from "@/features/ui/components/Link";
 
 interface LeaderboardTimeframeNavProps {
   basePath: string;
@@ -32,18 +32,21 @@ export function LeaderboardTimeframeNav({
             timeframe === "all"
               ? basePath
               : `${basePath}?timeframe=${timeframe}`;
+          if (isActive) {
+            return (
+              <PrimaryInvertLink
+                key={timeframe}
+                href={href}
+                className="px-3 py-1.5 text-sm font-medium"
+              >
+                {labelForTimeframe(timeframe)}
+              </PrimaryInvertLink>
+            );
+          }
           return (
-            <Link
-              key={timeframe}
-              href={href}
-              className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
-                isActive
-                  ? "border-emerald-300 bg-emerald-300/20 text-emerald-200"
-                  : "border-white/20 bg-white/5 text-white/80 hover:bg-white/10"
-              }`}
-            >
+            <InvertLink key={timeframe} href={href} className="px-3 py-1.5 text-sm">
               {labelForTimeframe(timeframe)}
-            </Link>
+            </InvertLink>
           );
         })}
       </nav>

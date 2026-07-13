@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { LeaderboardTable } from "@/features/leaderboard/components/LeaderboardTable";
 import { LeaderboardTimeframeNav } from "@/features/leaderboard/components/LeaderboardTimeframeNav";
@@ -15,6 +14,7 @@ import { parseDifficultyLeaderboardTimeframe } from "@/features/leaderboard/serv
 import { difficultyLabels } from "@/features/game/engine/types";
 import { getDifficultyLabels } from "../page";
 import { GameHeader } from "@/features/game/components/GameHeader";
+import { InvertLink, PrimaryInvertLink } from "@/features/ui/components/Link";
 
 interface DifficultyLeaderboardPageProps {
   params: Promise<{ difficulty: string }>;
@@ -61,29 +61,28 @@ export default async function DifficultyLeaderboardPage({
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">
-              <Link
-                href={`/leaderboard`}
-                className="rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"
-              >
+              <InvertLink href="/leaderboard" className="px-3 py-1.5 text-sm">
                 All
-              </Link>
+              </InvertLink>
               {LEADERBOARD_DIFFICULTIES.map((difficultyKey) => {
-                const highlightedClasses =
-                  "rounded-md border px-3 py-1.5 text-sm font-medium transition border-emerald-300 bg-emerald-300/20 text-emerald-200";
-                const defaultClasses =
-                  "rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10";
-                const selectedClasses =
-                  difficultyKey === difficulty
-                    ? highlightedClasses
-                    : defaultClasses;
                 return (
-                  <Link
-                    key={difficultyKey}
-                    href={`/leaderboard/${difficultyKey}`}
-                    className={selectedClasses}
-                  >
-                    {getDifficultyLabels(difficultyKey)}
-                  </Link>
+                  difficultyKey === difficulty ? (
+                    <PrimaryInvertLink
+                      key={difficultyKey}
+                      href={`/leaderboard/${difficultyKey}`}
+                      className="px-3 py-1.5 text-sm font-medium"
+                    >
+                      {getDifficultyLabels(difficultyKey)}
+                    </PrimaryInvertLink>
+                  ) : (
+                    <InvertLink
+                      key={difficultyKey}
+                      href={`/leaderboard/${difficultyKey}`}
+                      className="px-3 py-1.5 text-sm"
+                    >
+                      {getDifficultyLabels(difficultyKey)}
+                    </InvertLink>
+                  )
                 );
               })}
             </div>
@@ -91,12 +90,12 @@ export default async function DifficultyLeaderboardPage({
         </div>
 
         <LeaderboardTable entries={entries} currentDifficulty={difficulty} />
-        <Link
+        <InvertLink
           href="/leaderboard"
-          className="w-fit rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"
+          className="w-fit px-3 py-1.5 text-sm"
         >
           Back to all difficulties
-        </Link>
+        </InvertLink>
       </main>
     </div>
   );

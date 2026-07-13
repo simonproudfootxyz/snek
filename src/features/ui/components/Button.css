@@ -1,0 +1,116 @@
+.button {
+  background: var(--grey-300);
+  font-size: 0.75rem;
+  color: var(--grey-950);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  min-height: 2.75rem;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:not(.disabled, [disabled]):hover,
+  &:not(.disabled, [disabled]):focus-visible {
+    background: var(--grey-400);
+    cursor: pointer;
+  }
+
+  &:not(.disabled, [disabled]):active {
+    background: var(--grey-450);
+  }
+
+  &.disabled,
+  &[disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.button--mini {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  min-height: auto;
+}
+
+.button--invert {
+  background: transparent;
+  color: var(--grey-300);
+  border: 1px solid var(--grey-300);
+
+  &:not(.disabled, [disabled]):hover,
+  &:not(.disabled, [disabled]):focus-visible {
+    background: transparent;
+    color: var(--grey-450);
+    border-color: var(--grey-450);
+  }
+
+  &:not(.disabled, [disabled]):active {
+    background: transparent;
+    color: var(--grey-500);
+    border-color: var(--grey-500);
+  }
+}
+
+.button--primary {
+  background: var(--primary-color);
+  color: var(--grey-950);
+
+  &:not(.disabled, [disabled]):hover,
+  &:not(.disabled, [disabled]):focus-visible {
+    background: var(--primary-color--hover);
+    color: var(--grey-950);
+  }
+
+  &:not(.disabled, [disabled]):active {
+    background: var(--primary-color--pressed);
+  }
+}
+
+.button--primary-invert {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+
+  &:not(.disabled, [disabled]):hover,
+  &:not(.disabled, [disabled]):focus-visible {
+    background: transparent;
+    border-color: var(--primary-color--hover);
+    color: var(--primary-color--hover);
+  }
+
+  &:not(.disabled, [disabled]):active {
+    border-color: var(--primary-color--pressed);
+    color: var(--primary-color--pressed);
+    background: transparent;
+  }
+}
+
+.button--text {
+  background: transparent;
+  color: var(--grey-550);
+  border: none;
+  padding: 0;
+  min-height: auto;
+  font-weight: 500;
+
+  &:not(.disabled, [disabled]):hover,
+  &:not(.disabled, [disabled]):focus-visible {
+    background: transparent;
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  &:not(.disabled, [disabled]):active {
+    color: var(--primary-color--pressed);
+  }
+}
+
+.button--full-width {
+  width: 100%;
+}

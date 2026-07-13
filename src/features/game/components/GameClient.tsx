@@ -5,7 +5,6 @@ import { createInitialState } from "../engine/initialState";
 import { queueDirection, tickGame } from "../engine/updateGame";
 import type { Difficulty, Direction, GameState } from "../engine/types";
 import { GameCanvas } from "./GameCanvas";
-import { GameControls } from "./GameControls";
 import { GameHUD } from "./GameHUD";
 import { GameOverModal } from "./GameOverModal";
 import { GameStartOverlay } from "./GameStartOverlay";

@@ -1,0 +1,6 @@
+.leaderboard-entry {
+}
+
+.leaderboard-entry__score {
+  color: var(--primary-color);
+}

@@ -1,4 +1,9 @@
 import type { GamePhase } from "../engine/types";
+import Button, {
+  InvertButton,
+  PrimaryButton,
+  PrimaryInvertButton,
+} from "@/features/ui/components/Button";
 
 interface GameControlsProps {
   phase: GamePhase;
@@ -18,39 +23,27 @@ export function GameControls({
   return (
     <div className="flex flex-wrap items-center gap-3 justify-center">
       {phase === "idle" && (
-        <button
-          type="button"
-          onClick={onStart}
-          className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
-        >
+        <PrimaryButton type="button" onClick={onStart} className="px-4 py-2 text-sm">
           Start
-        </button>
+        </PrimaryButton>
       )}
       {phase === "running" && (
-        <button
-          type="button"
-          onClick={onPause}
-          className="rounded-lg bg-slate-300 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-slate-200"
-        >
+        <Button type="button" onClick={onPause} className="px-4 py-2 text-sm">
           Pause
-        </button>
+        </Button>
       )}
       {phase === "paused" && (
-        <button
+        <PrimaryInvertButton
           type="button"
           onClick={onResume}
-          className="rounded-lg bg-sky-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-sky-300"
+          className="px-4 py-2 text-sm"
         >
           Resume
-        </button>
+        </PrimaryInvertButton>
       )}
-      <button
-        type="button"
-        onClick={onRestart}
-        className="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
-      >
+      <InvertButton type="button" onClick={onRestart} className="px-4 py-2 text-sm">
         Restart
-      </button>
+      </InvertButton>
     </div>
   );
 }

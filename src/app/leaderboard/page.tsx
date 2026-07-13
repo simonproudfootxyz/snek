@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LeaderboardTable } from "@/features/leaderboard/components/LeaderboardTable";
 import { LeaderboardTimeframeNav } from "@/features/leaderboard/components/LeaderboardTimeframeNav";
 import {
@@ -9,6 +8,7 @@ import { getLeaderboard } from "@/features/leaderboard/server/service";
 import { parseAllLeaderboardTimeframe } from "@/features/leaderboard/server/timeframeParse";
 import { Difficulty, difficultyLabels } from "@/features/game/engine/types";
 import { GameHeader } from "@/features/game/components/GameHeader";
+import { InvertLink, PrimaryInvertLink } from "@/features/ui/components/Link";
 
 interface LeaderboardPageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -44,20 +44,17 @@ export default async function LeaderboardPage({
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">
-              <Link
-                href={`/leaderboard`}
-                className="rounded-md border px-3 py-1.5 text-sm font-medium transition border-emerald-300 bg-emerald-300/20 text-emerald-200"
-              >
+              <PrimaryInvertLink href="/leaderboard" className="px-3 py-1.5 text-sm">
                 All
-              </Link>
+              </PrimaryInvertLink>
               {LEADERBOARD_DIFFICULTIES.map((difficulty) => (
-                <Link
+                <InvertLink
                   key={difficulty}
                   href={`/leaderboard/${difficulty}`}
-                  className="rounded-md border border-white/20 bg-white/5 px-3 py-1.5 text-sm text-white/80 transition hover:bg-white/10"
+                  className="px-3 py-1.5 text-sm"
                 >
                   {getDifficultyLabels(difficulty)}
-                </Link>
+                </InvertLink>
               ))}
             </div>
           </section>

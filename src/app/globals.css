@@ -1,12 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --surface: #090b12;
-  --panel: #121826;
-  --text: #eff3ff;
-  --muted: #9da8c4;
+  --grey-100: #ffffff;
+  --grey-200: #fcfbff;
+  --grey-300: #faf9ff;
+  --grey-350: #f0eff8;
+  --grey-400: #e7e5f4;
+  --grey-450: #d2d1e2;
+  --grey-500: #aca7c2;
+  --grey-550: #a3a0b4;
+  --grey-600: #938eaa;
+  --grey-650: #8882a1;
+  --grey-700: #706a84;
+  --grey-750: #635e7b;
+  --grey-800: #504c65;
+  --grey-850: #3a3747;
+  --grey-900: #252231;
+  --grey-950: #121119;
+  --grey-1000: #000000;
+
+  --primary-color: #ffff4f;
+  --primary-color--hover: #ffff90;
+  --primary-color--pressed: #efef4a;
+  --secondary-color: #ff8e82;
+
+  --white: var(--grey-100);
+  --yellow: var(--primary-color);
+  --red: var(--secondary-color);
+  --modal-background: var(--grey-900);
+
+  --surface: var(--grey-950);
+  --panel: var(--grey-900);
+  --text: var(--grey-100);
+  --muted: var(--grey-550);
   --accent: #6ce0b7;
-  --danger: #ff6a88;
+  --danger: var(--secondary-color);
 }
 
 @theme inline {
@@ -23,7 +51,7 @@ body {
 }
 
 code {
-  background-color: var(--color-emerald-400);
+  background-color: var(--primary-color);
   color: var(--surface);
   padding: 0.25em 0.5em;
   border-radius: 0.25em;
@@ -46,5 +74,5 @@ code {
 }
 
 .game-canvas-container {
-  border: 6px solid var(--color-emerald-300);
+  border: 6px solid var(--primary-color);
 }

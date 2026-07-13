@@ -8,6 +8,7 @@ import type { SubmitLeaderboardEntrySuccessResponse } from "../domain/types";
 import { submitLeaderboardEntrySchema } from "../domain/schema";
 import { useLeaderboardSubmit } from "../client/useLeaderboardSubmit";
 import { getDifficultyLabels } from "@/app/leaderboard/page";
+import { PrimaryButton } from "@/features/ui/components/Button";
 
 const leaderboardNameSchema = submitLeaderboardEntrySchema.pick({
   playerName: true,
@@ -90,13 +91,13 @@ export function LeaderboardSubmitForm({
             <p className="text-xs text-red-300">{errors.playerName.message}</p>
           )}
           {submitError && <p className="text-xs text-red-300">{submitError}</p>}
-          <button
+          <PrimaryButton
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-emerald-400 px-3 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full px-3 py-2 text-sm disabled:opacity-60"
           >
             {isSubmitting ? "Submitting..." : "Submit to leaderboard"}
-          </button>
+          </PrimaryButton>
         </form>
       )}
     </div>

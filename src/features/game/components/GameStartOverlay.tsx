@@ -1,4 +1,10 @@
 import { difficultyLabels, type Difficulty } from "../engine/types";
+import Button, {
+  InvertButton,
+  PrimaryButton,
+  PrimaryInvertButton,
+} from "@/features/ui/components/Button";
+import Modal from "@/features/ui/components/Modal/Modal";
 
 interface GameStartOverlayProps {
   onStart: () => void;
@@ -14,8 +20,8 @@ export function GameStartOverlay({
   const isHardLikeMode = difficulty === "hard" || difficulty === "diabolical";
   const hasStructures = difficulty === "puzzle" || difficulty === "diabolical";
   return (
-    <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/72 backdrop-blur-[2px]">
-      <div className=".modal-body w-[320px] rounded-xl border border-white/15 bg-[#161a24] p-6 text-center">
+    <Modal size="sm" closeOnBackdrop={false} contained>
+      <div className="text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-white/55">
           Welcome to Snek, The Game
         </p>
@@ -63,44 +69,46 @@ export function GameStartOverlay({
               const isSelected = difficulty === value;
               const id = `difficulty-${value}`;
 
+              if (isSelected) {
+                return (
+                  <Button
+                    key={id}
+                    type="button"
+                    onClick={() => onDifficultyChange(value)}
+                    className="w-full"
+                  >
+                    {label}
+                  </Button>
+                );
+              }
+
               return (
-                <label
-                  key={value}
-                  htmlFor={id}
-                  className={`cursor-pointer rounded-md border px-2 py-1 text-sm font-medium transition ${
-                    isSelected
-                      ? "border-emerald-300 bg-emerald-400/25 text-white"
-                      : "border-white/20 bg-[#1b1f2a] text-white/80 hover:bg-[#252b3a]"
-                  }`}
+                <InvertButton
+                  key={id}
+                  type="button"
+                  onClick={() => onDifficultyChange(value)}
+                  className="w-full"
+                  id={id}
                 >
-                  <input
-                    id={id}
-                    type="radio"
-                    name="difficulty"
-                    value={value}
-                    checked={isSelected}
-                    onChange={() => onDifficultyChange(value)}
-                    className="sr-only"
-                  />
                   {label}
-                </label>
+                </InvertButton>
               );
             })}
           </div>
         </fieldset>
         <div>
-          <button
+          <PrimaryButton
             type="button"
             onClick={onStart}
-            className="mt-2 rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-[#10141b] transition hover:bg-emerald-300"
+            className="mt-2 px-4 py-2 text-sm"
           >
             Start game
-          </button>
+          </PrimaryButton>
           <p className="mt-2 text-sm text-white/75">
             Press <code>Spacebar</code> to start, pause, or resume instantly.
           </p>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
