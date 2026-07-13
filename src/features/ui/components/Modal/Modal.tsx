@@ -39,7 +39,6 @@ const Modal = ({
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previousOverflow;
     };
@@ -71,7 +70,11 @@ const Modal = ({
               </h2>
             ) : null}
             {onClose ? (
-              <Button onClick={onClose} className="modal__close" aria-label="Close">
+              <Button
+                onClick={onClose}
+                className="modal__close"
+                aria-label="Close"
+              >
                 ✕
               </Button>
             ) : null}
