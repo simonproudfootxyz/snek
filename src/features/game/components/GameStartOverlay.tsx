@@ -2,7 +2,6 @@ import { difficultyLabels, type Difficulty } from "../engine/types";
 import Button, {
   InvertButton,
   PrimaryButton,
-  PrimaryInvertButton,
 } from "@/features/ui/components/Button";
 import Modal from "@/features/ui/components/Modal/Modal";
 

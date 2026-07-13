@@ -155,7 +155,9 @@ export function GameClient() {
       aria-label="Snek game area"
     >
       <GameHUD state={state} />
-      <div className="relative w-full max-w-[440px] game-canvas-container">
+      <div
+        className={`relative w-full max-w-[440px] game-canvas-container ${state.phase === "running" && "game-canvas-container--active"}`}
+      >
         <GameCanvas state={state} className="game-play-area" />
         {state.phase === "idle" && (
           <GameStartOverlay

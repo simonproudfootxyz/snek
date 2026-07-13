@@ -40,14 +40,14 @@
 @theme inline {
   --color-background: var(--surface);
   --color-foreground: var(--text);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-jost);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: radial-gradient(circle at top, #0d1220 0%, var(--surface) 48%);
   color: var(--text);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jost), Arial, Helvetica, sans-serif;
 }
 
 code {
@@ -55,6 +55,7 @@ code {
   color: var(--surface);
   padding: 0.25em 0.5em;
   border-radius: 0.25em;
+  font-family: var(--font-jost);
 }
 
 .game-touch-controls,
@@ -75,4 +76,8 @@ code {
 
 .game-canvas-container {
   border: 6px solid var(--primary-color);
+}
+
+.game-canvas-container--active {
+  border-color: var(--accent);
 }

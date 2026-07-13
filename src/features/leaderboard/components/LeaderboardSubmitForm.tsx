@@ -8,7 +8,11 @@ import type { SubmitLeaderboardEntrySuccessResponse } from "../domain/types";
 import { submitLeaderboardEntrySchema } from "../domain/schema";
 import { useLeaderboardSubmit } from "../client/useLeaderboardSubmit";
 import { getDifficultyLabels } from "@/app/leaderboard/page";
-import { PrimaryButton } from "@/features/ui/components/Button";
+import Button, {
+  PrimaryButton,
+  PrimaryInvertButton,
+} from "@/features/ui/components/Button";
+import "./LeaderboardSubmitForm.css";
 
 const leaderboardNameSchema = submitLeaderboardEntrySchema.pick({
   playerName: true,
@@ -84,20 +88,20 @@ export function LeaderboardSubmitForm({
             placeholder="Your name"
             maxLength={20}
             {...register("playerName")}
-            className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/45 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+            className="player-name__input w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/45 focus:outline-none focus:ring-2"
             disabled={isSubmitting}
           />
           {errors.playerName?.message && (
             <p className="text-xs text-red-300">{errors.playerName.message}</p>
           )}
           {submitError && <p className="text-xs text-red-300">{submitError}</p>}
-          <PrimaryButton
+          <Button
             type="submit"
             disabled={isSubmitting}
             className="w-full px-3 py-2 text-sm disabled:opacity-60"
           >
             {isSubmitting ? "Submitting..." : "Submit to leaderboard"}
-          </PrimaryButton>
+          </Button>
         </form>
       )}
     </div>
