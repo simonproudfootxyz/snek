@@ -14,7 +14,11 @@ import { parseDifficultyLeaderboardTimeframe } from "@/features/leaderboard/serv
 import { difficultyLabels } from "@/features/game/engine/types";
 import { getDifficultyLabels } from "../page";
 import { GameHeader } from "@/features/game/components/GameHeader";
-import { InvertLink, PrimaryInvertLink } from "@/features/ui/components/Link";
+import {
+  InvertLink,
+  PrimaryInvertLink,
+  PrimaryLink,
+} from "@/features/ui/components/Link";
 
 interface DifficultyLeaderboardPageProps {
   params: Promise<{ difficulty: string }>;
@@ -65,24 +69,22 @@ export default async function DifficultyLeaderboardPage({
                 All
               </InvertLink>
               {LEADERBOARD_DIFFICULTIES.map((difficultyKey) => {
-                return (
-                  difficultyKey === difficulty ? (
-                    <PrimaryInvertLink
-                      key={difficultyKey}
-                      href={`/leaderboard/${difficultyKey}`}
-                      className="px-3 py-1.5 text-sm font-medium"
-                    >
-                      {getDifficultyLabels(difficultyKey)}
-                    </PrimaryInvertLink>
-                  ) : (
-                    <InvertLink
-                      key={difficultyKey}
-                      href={`/leaderboard/${difficultyKey}`}
-                      className="px-3 py-1.5 text-sm"
-                    >
-                      {getDifficultyLabels(difficultyKey)}
-                    </InvertLink>
-                  )
+                return difficultyKey === difficulty ? (
+                  <PrimaryLink
+                    key={difficultyKey}
+                    href={`/leaderboard/${difficultyKey}`}
+                    className="px-3 py-1.5 text-sm font-medium"
+                  >
+                    {getDifficultyLabels(difficultyKey)}
+                  </PrimaryLink>
+                ) : (
+                  <InvertLink
+                    key={difficultyKey}
+                    href={`/leaderboard/${difficultyKey}`}
+                    className="px-3 py-1.5 text-sm"
+                  >
+                    {getDifficultyLabels(difficultyKey)}
+                  </InvertLink>
                 );
               })}
             </div>
@@ -90,10 +92,7 @@ export default async function DifficultyLeaderboardPage({
         </div>
 
         <LeaderboardTable entries={entries} currentDifficulty={difficulty} />
-        <InvertLink
-          href="/leaderboard"
-          className="w-fit px-3 py-1.5 text-sm"
-        >
+        <InvertLink href="/leaderboard" className="w-fit px-3 py-1.5 text-sm">
           Back to all difficulties
         </InvertLink>
       </main>
