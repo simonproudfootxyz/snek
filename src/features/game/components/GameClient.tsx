@@ -149,7 +149,7 @@ export function GameClient() {
 
   return (
     <section
-      className="game-client-container mx-auto flex w-full max-w-[980px] flex-col gap-6"
+      className="game-client-container mx-auto flex w-full flex-col gap-6"
       {...touchHandlers}
       role="application"
       aria-label="Snek game area"

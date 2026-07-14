@@ -19,12 +19,13 @@
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 25px rgb(0 0 0 / 0.3);
+  box-shadow: 2px 3px 3px var(--grey-950);
   animation: modal-slide-in 0.25s ease-out;
   color: var(--white);
   display: flex;
   flex-direction: column;
   border: 1px solid rgb(255 255 255 / 0.15);
+  filter: drop-shadow(2px 3px 3px var(--grey-950));
 }
 
 .modal--sm {
@@ -63,6 +64,7 @@
 
 .modal__body {
   padding: 0 1.25rem 1.25rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 1);
 }
 
 .modal__header + .modal__body {
