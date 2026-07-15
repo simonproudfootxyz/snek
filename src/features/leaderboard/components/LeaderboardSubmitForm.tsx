@@ -73,7 +73,7 @@ export function LeaderboardSubmitForm({
         </p>
       )}
       {isSubmitted ? (
-        <p className="mt-2 text-sm text-emerald-300">
+        <p className="mt-2 text-sm">
           You scored #{submission?.rank ?? "?"} on the{" "}
           <code>{getDifficultyLabels(difficulty)}</code> mode leaderboard!
         </p>
