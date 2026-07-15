@@ -56,6 +56,7 @@ code {
   padding: 0 0.5em;
   border-radius: 0.25em;
   font-family: var(--font-jost);
+  font-weight: 600;
 }
 
 .game-touch-controls,
