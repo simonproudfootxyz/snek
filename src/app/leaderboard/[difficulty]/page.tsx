@@ -57,11 +57,6 @@ export default async function DifficultyLeaderboardPage({
           </h3>
         </header>
         <div className="flex justify-between">
-          <LeaderboardTimeframeNav
-            basePath={`/leaderboard/${difficulty}`}
-            activeTimeframe={timeframe}
-            options={["all", "daily", "weekly"]}
-          />
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">

@@ -40,11 +40,6 @@ export default async function LeaderboardPage({
           <h3>Top 100 Scores</h3>
         </header>
         <div className="flex justify-between">
-          <LeaderboardTimeframeNav
-            basePath="/leaderboard"
-            activeTimeframe={timeframe}
-            options={["all", "daily", "weekly", "monthly"]}
-          />
           <section className="space-y-2">
             <h2 className="text-lg font-semibold">Browse by difficulty</h2>
             <div className="flex flex-wrap gap-2">
